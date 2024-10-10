@@ -2,22 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Supplier; // Importar el modelo Supplier
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
-    //método para mostrar la página principal de los empleados
+    // Método para mostrar la página principal de los proveedores
     public function index() {
-        return view('stores.suppliers.index');
+        // Obtén todos los proveedores
+        $suppliers = Supplier::all();
+        return view('stores.suppliers.index', compact('suppliers'));
     }
 
-    //método para mostrar el formulario para crear un nuevo empleado
+    // Método para mostrar el formulario para crear un nuevo proveedor
     public function create() {
         return view('stores.suppliers.create');
     }
 
-    //método para mostrar la información de un empleado en específico
-    public function show($supplier) {
+    // Método para almacenar un nuevo proveedor
+    public function store(Request $request) {
+        // Validación de datos
+        $request->validate([
+            'company_name' => 'required|string|max:255',
+            'fiscal_address' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'credit_line' => 'nullable|numeric',
+        ]);
+
+        // Crear el proveedor
+        Supplier::create($request->all());
+
+        // Redirigir a la lista de proveedores con un mensaje
+        return redirect()->route('suppliers.index')->with('success', 'Proveedor creado con éxito.');
+    }
+
+    // Método para mostrar la información de un proveedor específico
+    public function show($id) {
+        // Busca el proveedor por ID, o lanza un 404 si no se encuentra
+        $supplier = Supplier::findOrFail($id);
         return view('stores.suppliers.show', compact('supplier'));
     }
 }

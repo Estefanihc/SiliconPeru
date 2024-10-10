@@ -1,8 +1,76 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <div style="text-align: center;">
+                <img src="https://mlkenzoihcoe.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://silicon.pe/wp-content/uploads/2023/01/Logotipo-en-Blanco2.png" alt="Logo Silicon" class="logo" style="width: 200px; margin-bottom: 20px;">
+            </div>
         </x-slot>
+
+        <style>
+            body {
+                background: url('https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg') no-repeat center center fixed;
+                background-size: cover;
+                font-family: 'Poppins', sans-serif;
+                margin: 0;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .x-authentication-card {
+                background-color: rgba(255, 255, 255, 0.9);
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                max-width: 400px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .x-button {
+                background-color: #f39c12;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                text-align: center;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .x-button:hover {
+                background-color: #e67e22;
+            }
+
+            .text-gray-600 {
+                color: #4b516d;
+            }
+
+            .text-gray-600:hover {
+                color: #3e4453;
+            }
+
+            .ms-4 {
+                margin-left: 1rem;
+            }
+
+            input[type="email"], input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+
+            label {
+                text-align: left;
+                display: block;
+                font-size: 14px;
+                color: #333;
+            }
+        </style>
 
         <x-validation-errors class="mb-4" />
 
@@ -32,7 +100,7 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-between mt-4">
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
