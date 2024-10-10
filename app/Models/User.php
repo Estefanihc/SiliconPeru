@@ -67,7 +67,7 @@ class User extends Authenticatable
         );
     }
 
-    //HASHEAR contraseñas
+    //HASHEAR las contraseñas
     protected function password(): Attribute // Mutador para el password
     {
         return new Attribute(
