@@ -11,11 +11,12 @@ class CreateProductsPurchasesTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('products_purchases', function (Blueprint $table) {
+        Schema::create('product_purchases', function (Blueprint $table) {
             $table->foreignId('purchase_id')->constrained('purchases');
             $table->foreignId('product_id')->constrained('products');
             $table->integer('quantity_purchased');
             $table->primary(['purchase_id', 'product_id']);
+            $table->timestamps();
         });
     }
 
@@ -24,6 +25,6 @@ class CreateProductsPurchasesTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products_purchases');
+        Schema::dropIfExists('product_purchases');
     }
 }

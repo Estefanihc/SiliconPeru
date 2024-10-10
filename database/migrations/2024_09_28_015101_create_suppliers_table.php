@@ -16,7 +16,7 @@ class CreateSuppliersTable extends Migration
             $table->string('company_name', 100);
             $table->string('fiscal_address', 100);
             $table->string('email', 100)->nullable();
-            $table->string('phone', 15)->nullable();
+            $table->string('phone', 20)->nullable();
             $table->decimal('credit_line', 10, 2)->nullable();
             $table->timestamps();
         });
