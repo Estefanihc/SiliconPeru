@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -105,14 +105,24 @@
         </ul>
 
         <div class="buttons-container">
+
             <a href="{{ route('home') }}" class="btn btn-primary"><i class="fas fa-cogs"></i> Configurar Almacén</a>
+            
             <a href="{{ route('suppliers.index') }}" class="btn btn-primary"><i class="fas fa-truck"></i> Ver Proveedores</a>
+            
             <a href="{{ route('products.index') }}" class="btn btn-primary"><i class="fas fa-box"></i> Ver Productos</a>
+        
+            <a href="{{ route('purchases.index', ['id' => $purchase->id]) }}" class="btn btn-primary">
+                <i class="fas fa-shopping-cart"></i> Compras
+            </a>
+        
             <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                 @csrf
                 <button type="submit" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
             </form>
+        
         </div>
+        
     </div>
 </body>
 </html>

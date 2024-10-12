@@ -26,4 +26,4 @@ class ProductFactory extends Factory
             'stock' => $this->faker->numberBetween(1, 500),            // Stock entre 1 y 500
         ];
     }
-}
+}   

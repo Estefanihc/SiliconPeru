@@ -101,10 +101,17 @@
         <!-- Título -->
         <div class="title">Información del Producto: <span>{{ $product->name }}</span></div>
 
+        <!-- Mensaje de éxito -->
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <!-- Información del producto -->
         <div class="product-info">
             <p>Descripción: <span>{{ $product->description }}</span></p>
-            <p>Fecha de Entrada: <span>{{ $product->entry_date }}</span></p>
+            <p>Fecha de Entrada: <span>{{ \Carbon\Carbon::parse($product->entry_date)->format('d/m/Y') }}</span></p>
             <p>Precio de Compra: <span>S/. {{ number_format($product->purchase_price, 2) }}</span></p>
             <p>Precio de Venta: <span>S/. {{ number_format($product->sale_price, 2) }}</span></p>
             <p>Stock Disponible: <span>{{ $product->stock }}</span></p>
@@ -114,7 +121,7 @@
         <!-- Imagen del producto -->
         @if($product->image)
             <div class="product-image">
-                <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}">
+                <img src="{{ Storage::url($product->image) }}" alt="Imagen de {{ $product->name }}">
             </div>
         @endif
 

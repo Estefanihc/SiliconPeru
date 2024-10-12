@@ -119,7 +119,7 @@
         @foreach ($products as $product)
             <div class="product-item">
                 <!-- Imagen del producto -->
-                <img src="{{ $product->image ? Storage::url($product->image) : asset('storage/images/img8.jpg') }}" alt="{{ $product->name }}">
+                <img src="{{ $product->image ? Storage::url($product->image) : asset('storage/images/default-image.jpg') }}" alt="{{ $product->name }}" />
 
                 <!-- Información del producto -->
                 <div class="product-info">

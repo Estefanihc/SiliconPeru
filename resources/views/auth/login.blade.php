@@ -80,7 +80,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-top: 21px; /* Añadir espacio entre el checkbox y los botones */
+                margin-top: 20px; /* Añadir espacio entre el checkbox y los botones */
 
             }
         </style>

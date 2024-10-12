@@ -39,33 +39,38 @@ class ProductController extends Controller
 
     // Método para almacenar un nuevo producto
     public function store(Request $request)
-    {
-        // Validar los datos
-        $validatedData = $request->validate([
-            'name' => 'required|max:100',
-            'description' => 'nullable',
-            'entry_date' => 'nullable|date',
-            'purchase_price' => 'required|numeric',
-            'sale_price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'profit_margin' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación para la imagen
-        ]);
+{
+    // Validar los datos
+    $validatedData = $request->validate([
+        'name' => 'required|max:100',
+        'description' => 'nullable',
+        'entry_date' => 'nullable|date',
+        'purchase_price' => 'required|numeric',
+        'sale_price' => 'required|numeric',
+        'stock' => 'required|integer',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación para la imagen
+    ]);
 
-        // Crear un nuevo producto
-        $product = new Product();
-        $this->fillProduct($product, $validatedData);
+    // Calcular el margen de ganancia
+    $purchasePrice = $validatedData['purchase_price'];
+    $salePrice = $validatedData['sale_price'];
+    $profitMargin = ($salePrice > 0) ? (($salePrice - $purchasePrice) / $salePrice) * 100 : 0;
+    $validatedData['profit_margin'] = $profitMargin;
 
-        // Manejar la imagen
-        if ($request->hasFile('image')) {
-            $product->image = $request->file('image')->store('images', 'public');
-        }
+    // Crear un nuevo producto
+    $product = new Product();
+    $this->fillProduct($product, $validatedData);
 
-        $product->save();
-
-        // Redirigir a la lista de productos o a una vista de confirmación
-        return redirect()->route('products.show', $product)->with('success', 'Producto creado exitosamente.');
+    // Manejar la imagen
+    if ($request->hasFile('image')) {
+        $product->image = $request->file('image')->store('images', 'public');
     }
+
+    $product->save();
+
+    // Redirigir a la lista de productos o a una vista de confirmación
+    return redirect()->route('products.show', $product)->with('success', 'Producto creado exitosamente.');
+}
 
     // Método para actualizar un producto existente
     public function update(Request $request, Product $product)
@@ -111,4 +116,6 @@ class ProductController extends Controller
         $product->stock = $data['stock'];
         $product->profit_margin = $data['profit_margin'];
     }
+
+   
 }

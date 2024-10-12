@@ -21,6 +21,9 @@ use App\Http\Controllers\SupplierController;
 |
 */
 
+Route::get('/search', [PurchaseController::class, 'search']);
+
+
 //Vista principal
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', HomeController::class)->name('home'); 
@@ -71,14 +74,17 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-//Vista de compras
+
 Route::middleware(['auth'])->group(function () {
-    Route::controller(PurchaseController::class)->group(function() {
-        Route::get('/purchases', 'index')->name('compras.index'); // Asignar el nombre a esta ruta
-        Route::get('/purchases/create', 'create')->name('compras.create'); // Asignar nombre a crear
-        Route::get('/purchases/{purchase}', 'show')->name('compras.show'); // Asignar nombre a mostrar
-    });
+    Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
+    Route::get('/purchases/create', [PurchaseController::class, 'create'])->name('purchases.create');
+    Route::post('/purchases', [PurchaseController::class, 'store'])->name('purchases.store');
+    Route::get('/purchases/{id}', [PurchaseController::class, 'show'])->name('purchases.show');
+    // Add more routes as needed
 });
+
+
+
 
 //Vista de relación productos -> compras
 Route::middleware(['auth'])->group(function () {
@@ -182,4 +188,3 @@ Route::middleware([
     })->name('dashboard');
 });
 */
-

@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'Nueva Compra')
+@section('title', 'Compras')
 
 @section('content')
     <div class="background-image d-flex align-items-center justify-content-center">
@@ -19,24 +19,43 @@
                     <div class="card-body">
                         <p class="lead mb-4">Completa el siguiente formulario para registrar una nueva compra.</p>
 
-                        <form>
+                        <form id="purchaseForm">
                             <div class="form-group mb-3">
                                 <label for="itemName" class="form-label">Nombre del Artículo</label>
-                                <input type="text" class="form-control" id="itemName" placeholder="Ingrese el nombre del artículo">
+                                <input type="text" class="form-control" id="itemName" placeholder="Ingrese el nombre del artículo" required>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="quantity" class="form-label">Cantidad</label>
-                                <input type="number" class="form-control" id="quantity" placeholder="Ingrese la cantidad">
+                                <input type="number" class="form-control" id="quantity" placeholder="Ingrese la cantidad" required>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="price" class="form-label">Precio</label>
-                                <input type="text" class="form-control" id="price" placeholder="Ingrese el precio">
+                                <input type="text" class="form-control" id="price" placeholder="Ingrese el precio" required>
                             </div>
                             <div class="button-container">
                                 <button type="submit" class="btn btn-primary">Registrar Compra</button>
-                                <a href="{{ url()->previous() }}" class="btn btn-secondary">Volver</a>
+                                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Volver</a>
                             </div>
                         </form>
+
+                        <!-- Buscar Productos -->
+                        <div class="mt-4">
+                            <h4>Buscar Compras:</h4>
+                            <input type="text" id="searchInput" class="form-control mb-3" placeholder="Buscar por nombre o código">
+                        </div>
+
+                        <!-- Lista de compras -->
+                        <div class="mt-4">
+                            <h4>Ver Compras:</h4>
+                            <ul id="purchaseList" class="list-unstyled">
+                                @foreach ($purchases as $purchase)
+                                    <li>
+                                        <a href="{{ route('purchases.show', ['id' => $purchase->id]) }}" class="btn btn-info btn-block mb-2">Ver Compra {{ $purchase->id }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -99,7 +118,8 @@
         .btn {
             border-radius: 50px; /* Cambiar los bordes de los botones a estilo más moderno */
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            padding: 12px 20px;
+            padding: 8px 20px;
+            margin-bottom: 10%;
             font-size: 16px;
             font-weight: 600;
             width: 48%; /* Ancho consistente para los botones */
@@ -112,12 +132,16 @@
         }
 
         .btn-primary:hover {
-            background-color: #0056b3;
+            background-color: #fd812f;
             box-shadow: 0 6px 12px rgba(0, 123, 255, 0.5); /* Efecto al pasar sobre el botón */
+            margin-bottom: 10%;
         }
 
         .btn-secondary {
             background-color: #6c757d;
+            padding-top: 2%;
+            padding-bottom: 2%;
+            text-align: center;
             color: #fff;
             box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
         }
@@ -125,6 +149,18 @@
         .btn-secondary:hover {
             background-color: #5a6268;
             box-shadow: 0 6px 12px rgba(108, 117, 125, 0.5);
+        }
+
+        .btn-info {
+            background-color: #55b5c4;
+            padding-top: 0%;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+            box-shadow: 0 6px 12px rgba(23, 162, 184, 0.5);
         }
 
         .form-control {
@@ -153,5 +189,37 @@
             display: flex;
             justify-content: space-between; /* Botones alineados con espacio entre ellos */
         }
+
+        .list-unstyled li {
+            margin-bottom: 10px; /* Espaciado entre botones */
+        }
     </style>
+
+    <script>
+        document.getElementById('purchaseForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
+            
+            // Aquí puedes agregar la lógica para registrar la compra (usando AJAX o redireccionando a otro controlador).
+            alert('Compra registrada exitosamente.');
+
+            // Limpia los campos del formulario
+            this.reset();
+        });
+
+        // Filtrado de productos
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            const purchaseList = document.getElementById('purchaseList');
+            const items = purchaseList.getElementsByTagName('li');
+
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i].textContent.toLowerCase();
+                if (item.includes(filter)) {
+                    items[i].style.display = '';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
 @endsection
