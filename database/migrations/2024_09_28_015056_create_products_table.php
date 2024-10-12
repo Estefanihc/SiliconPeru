@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name', 100);
             $table->text('description')->nullable();
+            $table->string('image')->nullable(); // Agrega esta línea para la imagen
             $table->date('entry_date')->nullable();
             $table->decimal('purchase_price', 10, 2);
             $table->decimal('sale_price', 10, 2);

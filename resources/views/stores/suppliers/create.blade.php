@@ -20,6 +20,7 @@
                     <div class="card-body">
                         <form action="{{ route('suppliers.store') }}" method="POST">
                             @csrf
+
                             <div class="form-group mb-3">
                                 <label for="company_name">Nombre de la Empresa</label>
                                 <input type="text" class="form-control" id="company_name" name="company_name" required>
@@ -50,8 +51,9 @@
                                 <textarea class="form-control" id="comments" name="comments" rows="4" placeholder="Escribe aquí tus comentarios..."></textarea>
                             </div>
 
-                            <div class="form-group d-flex justify-content-center mb-3">
+                            <div class="d-flex justify-content-between mb-4">
                                 <button type="submit" class="btn btn-success">Agregar Proveedor</button>
+                                <a href="{{ route('suppliers.index') }}" class="btn btn-secondary">Regresar</a>
                             </div>
                         </form>
                     </div>
@@ -61,6 +63,10 @@
     </div>
 
     <style>
+        body {
+            font-family: 'Roboto', sans-serif; /* Aplicar la fuente a todo el cuerpo */
+        }
+
         .background-image {
             background-image: url('https://images.pexels.com/photos/7843999/pexels-photo-7843999.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
             background-size: cover;
@@ -105,10 +111,12 @@
         .inner-card {
             border-radius: 15px;
             border: none;
+            margin-bottom: 10%;
         }
 
         .card-header {
             border-radius: 15px 15px 0 0;
+            text-align: center;
         }
 
         .form-control {
@@ -117,11 +125,13 @@
             color: #000;
             background-color: #fff;
             transition: border-color 0.3s;
+            margin-bottom: 5%;
         }
 
         .form-control:focus {
             border-color: #0b2f7c;
             box-shadow: 0 0 5px rgba(11, 47, 124, 0.5);
+            margin-top: 10%;
         }
 
         .form-control::placeholder {
@@ -131,6 +141,8 @@
         .btn {
             border-radius: 5px;
             transition: background-color 0.3s ease, transform 0.3s;
+            flex: 1; /* Hacer que los botones ocupen el mismo ancho */
+            margin: 0 5px; /* Añadir espacio entre los botones */
         }
 
         .btn-success {
@@ -143,7 +155,21 @@
         }
 
         .btn-success:hover {
-            background-color: #218838;
+            background-color: #faa526;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background-color: #ffb7b7;
             transform: translateY(-2px);
         }
 

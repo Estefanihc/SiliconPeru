@@ -100,6 +100,21 @@
             background-color: #3e8e41;
         }
 
+        .btn-secondary {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e67e22;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -110,9 +125,12 @@
 
     <div class="container mt-5">
         <h2 class="text-center">Crear Nuevo Producto</h2>
-        
+
+        <!-- Botón para regresar -->
+        <a href="{{ route('products.index') }}" class="btn btn-secondary">Regresar</a>
+
         <!-- Formulario para crear el producto -->
-        <form action="{{ route('products.store') }}" method="POST" class="mt-4">
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data" class="mt-4">
             @csrf
             
             <!-- Campo nombre del producto -->
@@ -155,6 +173,12 @@
             <div class="form-group mt-3">
                 <label for="stock"><i class="fas fa-archive icon"></i> Stock</label>
                 <input type="number" name="stock" id="stock" class="form-control" placeholder="Cantidad en stock" required>
+            </div>
+
+            <!-- Campo para subir imagen -->
+            <div class="form-group mt-3">
+                <label for="image"><i class="fas fa-image icon"></i> Subir Imagen</label>
+                <input type="file" name="image" id="image" class="form-control" accept="image/*">
             </div>
     
             <!-- Botón para guardar -->

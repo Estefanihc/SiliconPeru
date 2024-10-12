@@ -1,53 +1,118 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://images.pexels.com/photos/4483608/pexels-photo-4483608.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+        }
 
-@section('content')
-    <x-app-layout>
-        <x-slot name="header">
-            <h2 class="font-semibold text-3xl text-gray-100 leading-tight">
-                {{ __('Dashboard') }}
-            </h2>
-        </x-slot>
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Oscurecer el fondo */
+            border-radius: 12px;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+        }
 
-        <!-- Fondo con degradado azul personalizado -->
-        <div class="py-12 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <!-- Caja contenedora -->
-                <div class="bg-white overflow-hidden shadow-2xl rounded-lg">
-                    <div class="p-6 sm:px-20 bg-gray-100 border-b border-gray-200">
-                        <div class="mt-8 text-4xl font-bold text-gray-900">
-                            ¡Bienvenido al sistema de gestión de almacén!
-                        </div>
-                        <div class="mt-4 text-lg text-gray-700 leading-relaxed">
-                            Administra los productos y empleados de manera fácil y eficiente desde aquí.
-                        </div>
+        .logo {
+            max-width: 150px;
+            margin-bottom: 30px;
+        }
 
-                        <!-- Botones de opciones -->
-                        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <!-- Productos -->
-                            <div class="bg-blue-200 hover:bg-blue-300 transition duration-300 ease-in-out text-center rounded-lg p-6">
-                                <a href="{{ route('products.index') }}"
-                                   class="block text-xl font-bold text-blue-800 hover:text-blue-900">
-                                    Ver Productos
-                                </a>
-                                <p class="mt-2 text-gray-600">
-                                    Administra todos los productos disponibles en el almacén.
-                                </p>
-                            </div>
+        h1, h3 {
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
 
-                            <!-- Empleados -->
-                            <div class="bg-green-200 hover:bg-green-300 transition duration-300 ease-in-out text-center rounded-lg p-6">
-                                <a href="{{ route('employees.index') }}"
-                                   class="block text-xl font-bold text-green-800 hover:text-green-900">
-                                    Ver Empleados
-                                </a>
-                                <p class="mt-2 text-gray-600">
-                                    Gestiona a los empleados y sus roles dentro del sistema.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        ul li {
+            color: #e0e0e0;
+            font-size: 18px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-size: 18px;
+            margin: 10px;
+            width: 200px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background-color: #f39c12; /* Color naranja basado en el estilo de silicon.pe */
+        }
+
+        .btn-primary:hover {
+            background-color: #e67e22;
+        }
+
+        .btn-secondary {
+            background-color: #4b516d; /* Color oscuro */
+        }
+
+        .btn-secondary:hover {
+            background-color: #3e4453;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logotipo -->
+        <div class="logo-container">
+            <img src="https://mlkenzoihcoe.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://silicon.pe/wp-content/uploads/2023/01/Logotipo-en-Blanco2.png" alt="Logo de Silicon">
         </div>
-    </x-app-layout>
-@endsection
+
+        <h1>Bienvenido, {{ Auth::user()->name }}!</h1>
+
+        <h3>Información de la Cuenta</h3>
+        <ul>
+            <li><strong>Nombre:</strong> {{ Auth::user()->name }}</li>
+            <li><strong>Correo Electrónico:</strong> {{ Auth::user()->email }}</li>
+        </ul>
+
+        <div class="buttons-container">
+            <a href="{{ route('home') }}" class="btn btn-primary"><i class="fas fa-cogs"></i> Configurar Almacén</a>
+            <a href="{{ route('suppliers.index') }}" class="btn btn-primary"><i class="fas fa-truck"></i> Ver Proveedores</a>
+            <a href="{{ route('products.index') }}" class="btn btn-primary"><i class="fas fa-box"></i> Ver Productos</a>
+            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

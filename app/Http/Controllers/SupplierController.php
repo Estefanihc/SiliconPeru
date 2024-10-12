@@ -43,4 +43,19 @@ class SupplierController extends Controller
         $supplier = Supplier::findOrFail($id);
         return view('stores.suppliers.show', compact('supplier'));
     }
+
+    public function destroy($id)
+{
+    $supplier = Supplier::findOrFail($id);
+    $supplier->delete();
+    return redirect()->route('suppliers.index')->with('success', 'Proveedor eliminado con éxito.');
+}
+
+public function edit($id)
+{
+    $supplier = Supplier::findOrFail($id);
+    return view('stores.suppliers.edit', compact('supplier'));
+}
+
+
 }

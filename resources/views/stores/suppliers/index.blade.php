@@ -6,14 +6,14 @@
     <div class="background-image d-flex align-items-center justify-content-center">
         <div class="container text-center">
             <!-- Logo centrado -->
-            <div class="logo-container mb-4"> <!-- Agregado mb-4 para margen inferior -->
-                <img src="https://mlkenzoihcoe.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://silicon.pe/wp-content/uploads/2023/01/Logotipo-en-Blanco2.png" alt="Logo Silicon" class="logo" />
+            <div class="logo-container mb-4">
+                <img src="https://silicon.pe/wp-content/uploads/2023/01/Logotipo-en-Blanco2.png" alt="Logo Silicon" class="logo" />
             </div>
 
             <div class="text-box mb-4">
                 <h1 class="font-weight-bold">Bienvenido a la página de Proveedores</h1>
             </div>
-            
+
             <div class="card shadow-lg mx-auto">
                 <div class="card-header bg-primary text-white">
                     <h2 class="mb-0">Lista de Proveedores</h2>
@@ -22,6 +22,11 @@
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <a href="{{ route('suppliers.create') }}" class="btn btn-success">Agregar Proveedor</a>
+                        <a href="{{ route('dashboard') }}" class="btn btn-secondary">Regresar</a> <!-- Redirige al dashboard -->
+                    </div>
 
                     <table class="table table-striped table-bordered mx-auto">
                         <thead>
@@ -46,6 +51,7 @@
                                     <td>{{ $supplier->credit_line ? '$' . number_format($supplier->credit_line, 2) : 'N/A' }}</td>
                                     <td>
                                         <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-warning btn-sm">Editar</a>
+
                                         <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
@@ -56,9 +62,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-                <div class="card-footer text-center">
-                    <a href="{{ route('suppliers.create') }}" class="btn btn-success">Agregar Proveedor</a>
                 </div>
             </div>
         </div>
@@ -72,84 +75,100 @@
             background-position: center;
             min-height: 100vh;
             padding: 20px 0;
-            color: #fff; /* Color del texto */
+            color: #fff;
             display: flex;
-            align-items: center; /* Centrar verticalmente */
-            justify-content: center; /* Centrar horizontalmente */
+            align-items: center;
+            justify-content: center;
         }
 
+        /* Estilo del logo */
         .logo-container {
             display: flex;
-            justify-content: center; /* Centrar horizontalmente */
-            margin-top: -20px; /* Ajusta este valor para subir el logo */
+            justify-content: center;
+            margin-top: -20px;
         }
 
         .logo {
-            max-width: 200px; /* Ajustar el tamaño del logo */
-            height: auto; /* Mantener la proporción */
-            margin: 0 auto; /* Centrar horizontalmente */
+            max-width: 200px;
+            height: auto;
+            margin: 0 auto;
         }
 
+        /* Cuadro de bienvenida */
         .text-box {
-    background-color: rgba(0, 0, 255, 0.7); /* Fondo azul semitransparente */
-    border-radius: 8px;
-    padding: 10px; /* Espaciado interno */
-    margin-bottom: 20px; /* Margen inferior */
-}
+            background-color: rgba(0, 0, 255, 0.7);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+            color: white; /* Color del texto en el cuadro de bienvenida */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
 
-
+        /* Tarjeta */
         .card {
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
-            border: none; /* Sin borde para una apariencia más limpia */
-            opacity: 0.95; /* Ligeramente transparente */
-            transition: transform 0.3s; /* Animación al pasar el ratón */
-            margin-top: 20px; /* Espacio encima de la tarjeta */
+            border: none;
+            opacity: 0.95;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 20px;
         }
 
         .card:hover {
-            transform: translateY(-5px); /* Levantar la tarjeta al pasar el ratón */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        h1 {
+        /* Estilo de encabezados */
+        h1, h2 {
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
             font-family: 'Arial', sans-serif;
-            font-size: 2.5rem;
         }
 
+        /* Tabla */
         .table {
             font-family: 'Arial', sans-serif;
             font-size: 1rem;
             color: #333;
+            border-collapse: collapse;
         }
 
         .table-header {
-            background-color: #f58c14; /* Azul */
+            background-color: #f58c14;
             color: white;
         }
 
         .table th, .table td {
-            padding: 12px; /* Espaciado en las celdas */
-            text-align: center; /* Alinear el texto al centro */
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd; /* Agregar bordes a las celdas */
         }
 
+        .table th {
+            background-color: #007bff; /* Cambiar el color del encabezado */
+            color: white; /* Color del texto del encabezado */
+        }
+
+        /* Botones */
         .btn {
             border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s; /* Añadir transición */
+            transition: background-color 0.3s ease, transform 0.3s;
+            flex: 1; /* Asegura que ocupen el mismo espacio */
+            margin: 0 10px; /* Espacio entre botones */
         }
 
         .btn-warning {
-            background-color: #ff9800; /* Naranja */
-            color: #fff; /* Color de texto */
+            background-color: #ff9800;
+            color: #fff;
         }
 
         .btn-warning:hover {
-            background-color: #e68a00; /* Naranja más oscuro */
+            background-color: #e68a00;
         }
 
         .btn-danger {
-            background-color: #dc3545; /* Color de fondo */
-            color: #fff; /* Color de texto */
+            background-color: #dc3545;
+            color: #fff;
         }
 
         .btn-danger:hover {
@@ -157,27 +176,33 @@
         }
 
         .btn-success {
-            background-color: #0b2f7c; /* Color de fondo */
-            color: #fff; /* Color de texto */
+            background-color: #0b2f7c;
+            color: #fff;
         }
 
         .btn-success:hover {
             background-color: #218838;
         }
 
+        /* Alertas */
         .alert {
             margin-bottom: 20px;
-            border-radius: 5px; /* Bordes redondeados */
+            border-radius: 5px;
+            padding: 10px; /* Aumentar el padding de las alertas */
         }
 
-        /* Estilos adicionales */
+        /* Ajustes para móviles */
         @media (max-width: 768px) {
             h1 {
-                font-size: 2rem; /* Tamaño de fuente más pequeño en pantallas pequeñas */
+                font-size: 2rem;
             }
 
             .table {
-                font-size: 0.9rem; /* Tamaño de fuente más pequeño para la tabla */
+                font-size: 0.9rem;
+            }
+
+            .logo {
+                max-width: 150px; /* Reducir el tamaño del logo en pantallas pequeñas */
             }
         }
     </style>

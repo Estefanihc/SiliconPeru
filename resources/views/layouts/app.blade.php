@@ -1,3 +1,8 @@
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<script src="//unpkg.com/alpinejs" defer></script>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

@@ -3,6 +3,9 @@
 @section('title', 'Productos')
 
 @section('content')
+    <!-- Enlace a Tailwind CSS -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
     <style>
         body {
             background-image: url('https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg');
@@ -16,19 +19,19 @@
         }
 
         .container {
-            background-color: rgba(20, 20, 20, 0.9); /* Fondo más oscuro */
+            background-color: rgba(20, 20, 20, 0.9); /* Fondo oscuro */
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            max-width: 800px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
             margin: 20px;
             text-align: center;
-            color: white; /* Texto en blanco */
+            color: white;
         }
 
         .title {
-            font-size: 36px;
-            color: #4CAF50;
+            font-size: 40px;
+            color: #4CAF50; /* Verde resplandeciente */
             margin-bottom: 20px;
         }
 
@@ -59,26 +62,77 @@
         .btn-secondary:hover {
             background-color: #3e4453;
         }
+
+        .product-item {
+            background-color: rgba(75, 81, 109, 0.7); /* Fondo para cada producto */
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .product-item img {
+            width: 150px; /* Tamaño fijo para la imagen */
+            height: 150px;
+            object-fit: cover; /* Ajusta la imagen dentro del cuadro */
+            border-radius: 8px;
+        }
+
+        .product-info {
+            flex-grow: 1;
+        }
+
+        .product-info h2 {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .product-info p {
+            margin: 5px 0;
+        }
+
+        .pagination {
+            margin-top: 20px;
+        }
     </style>
 
+    <!-- Contenedor principal -->
     <div class="container">
+        <!-- Logo -->
         <div style="text-align: center; margin-bottom: 20px;">
             <img src="https://mlkenzoihcoe.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://silicon.pe/wp-content/uploads/2023/01/Logotipo-en-Blanco2.png" alt="Logo Silicon" class="logo" style="width: 150px;">
         </div>
 
+        <!-- Título de la página -->
         <div class="title">Productos</div>
         <p>Desde aquí puedes gestionar tus productos.</p>
 
-        <!-- Cambia los enlaces de "Ver Productos" a la lista de productos -->
-        <a href="{{ route('products.index') }}" class="btn btn-primary">Ver Productos</a>
-        <a href="{{ route('products.create') }}" class="btn btn-secondary">Agregar Producto</a>
+        <!-- Botones de acción -->
+        <a href="{{ route('products.create') }}" class="btn btn-primary">Agregar Producto</a>
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary">Volver</a>
 
         <!-- Mostrar la lista de productos -->
         @foreach ($products as $product)
-            <div>
-                <h2>{{ $product->name }}</h2>
-                <a href="{{ route('products.show', $product->id) }}" class="btn btn-primary">Ver Detalles</a>
+            <div class="product-item">
+                <!-- Imagen del producto -->
+                <img src="{{ $product->image ? Storage::url($product->image) : asset('storage/images/img8.jpg') }}" alt="{{ $product->name }}">
+
+                <!-- Información del producto -->
+                <div class="product-info">
+                    <h2>{{ $product->name }}</h2>
+                    <p>Precio: S/. {{ number_format($product->sale_price, 2) }}</p>
+                    <a href="{{ route('products.show', $product->id) }}" class="btn btn-secondary">Ver Detalles</a>
+                </div>
             </div>
         @endforeach
+
+        <!-- Paginación -->
+        <div class="pagination">
+            {{$products->links()}}
+        </div>
     </div>
 @endsection

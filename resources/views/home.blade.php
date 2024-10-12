@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal - Área de Almacén</title>
+    <title>Home</title>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -87,7 +87,10 @@
         @auth
             <!-- Mostrar si el usuario está autenticado -->
             <a href="{{ route('products.index') }}" class="btn btn-primary">Ver Inventario</a>
-            <a href="{{ route('products.create') }}" class="btn btn-secondary">Configurar Almacén</a>
+            <a href="{{ route('compras.index') }}" class="btn btn-secondary">Ver compras</a>
+
+            <!-- Botón para regresar al dashboard -->
+            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Regresar</a>
         @endauth
     </div>
 </body>
