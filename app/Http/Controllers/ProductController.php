@@ -55,7 +55,7 @@ class ProductController extends Controller
     // Calcular el margen de ganancia
     $purchasePrice = $validatedData['purchase_price'];
     $salePrice = $validatedData['sale_price'];
-    $profitMargin = ($salePrice > 0) ? (($salePrice - $purchasePrice) / $salePrice) * 100 : 0;
+    $profitMargin = ($purchasePrice > 0) ? (($salePrice - $purchasePrice) / $purchasePrice) * 100 : 0;
     $validatedData['profit_margin'] = $profitMargin;
 
     // Crear un nuevo producto

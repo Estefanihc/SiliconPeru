@@ -105,7 +105,7 @@ class ProductControllerTest extends TestCase
             'purchase_price' => 10.0,
             'sale_price' => 20.0,
             'stock' => 5,
-            'profit_margin' => 10.0,
+            'profit_margin' => 100.0,
         ]);
     }
 
