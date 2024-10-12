@@ -22,7 +22,9 @@ use App\Http\Controllers\SupplierController;
 */
 
 //Vista principal
-Route::get('/home', HomeController::class)->name('home'); 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', HomeController::class)->name('home'); 
+});
 
 //Vista de Dashboard
 Route::get('/', [DashboardController::class, 'index'])
