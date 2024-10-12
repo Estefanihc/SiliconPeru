@@ -20,11 +20,15 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(); // Esto crea un usuario con una contraseña aleatoria.
+
+        
+        $user->password = 'password'; // Contraseña correcta
+        $user->save(); // Guardar el usuario con la nueva contraseña
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'password',
+            'password' => 'password', // Asegúrate de que esta contraseña coincida
         ]);
 
         $this->assertAuthenticated();
