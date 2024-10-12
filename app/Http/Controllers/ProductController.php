@@ -46,10 +46,10 @@ class ProductController extends Controller
             'description' => 'nullable',
             'entry_date' => 'nullable|date',
             'purchase_price' => 'required|numeric',
-            'sale_price' => 'required|numeric',
+            'sale_price' => 'required|numeric|gt:purchase_price', // Asegúrate de que el precio de venta sea mayor que el precio de compra
             'stock' => 'required|integer',
             'profit_margin' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación para la imagen
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Crear un nuevo producto
