@@ -39,17 +39,18 @@ class ProductController extends Controller
 
     // Método para almacenar un nuevo producto
     public function store(Request $request)
-{
-    // Validar los datos
-    $validatedData = $request->validate([
-        'name' => 'required|max:100',
-        'description' => 'nullable',
-        'entry_date' => 'nullable|date',
-        'purchase_price' => 'required|numeric',
-        'sale_price' => 'required|numeric',
-        'stock' => 'required|integer',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación para la imagen
-    ]);
+    {
+        // Validar los datos
+        $validatedData = $request->validate([
+            'name' => 'required|max:100',
+            'description' => 'nullable',
+            'entry_date' => 'nullable|date',
+            'purchase_price' => 'required|numeric',
+            'sale_price' => 'required|numeric|gt:purchase_price', // Asegúrate de que el precio de venta sea mayor que el precio de compra
+            'stock' => 'required|integer',
+            'profit_margin' => 'required|numeric',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
     // Calcular el margen de ganancia
     $purchasePrice = $validatedData['purchase_price'];

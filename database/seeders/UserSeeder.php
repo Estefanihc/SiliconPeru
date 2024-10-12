@@ -13,23 +13,23 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        //Crear users de prueba
-        $user1 = new User();
-        $user1->name = "Sebasthian";
-        $user1->email = "s@gmail.com";
-        $user1->password = "123456";
-        $user1->save();
+        // Crear usuarios de prueba
+        User::create([
+            'name' => 'Sebasthian',
+            'email' => 's@gmail.com',
+            'password' => '123456', // Se hasheará automáticamente
+        ]);
 
-        $user2 = new User();
-        $user2->name = "Estefani";
-        $user2->email = "e@gmail.com";
-        $user2->password = "123456";
-        $user2->save();
+        User::create([
+            'name' => 'Estefani',
+            'email' => 'e@gmail.com',
+            'password' => '123456', // Se hasheará automáticamente
+        ]);
 
-        $user3 = new User();
-        $user3->name = "Aaron";
-        $user3->email = "a@gmail.com";
-        $user3->password = "123456";
-        $user3->save();
+        User::create([
+            'name' => 'Aaron',
+            'email' => 'a@gmail.com',
+            'password' => '123456', // Se hasheará automáticamente
+        ]);
     }
 }
