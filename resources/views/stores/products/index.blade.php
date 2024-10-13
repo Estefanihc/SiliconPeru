@@ -125,7 +125,7 @@
                 <div class="product-info">
                     <h2>{{ $product->name }}</h2>
                     <p>Precio: S/. {{ number_format($product->sale_price, 2) }}</p>
-                    <a href="{{ route('products.show', $product->id) }}" class="btn btn-secondary">Ver Detalles</a>
+                    <a href="{{route('products.show', $product->id) }}" class="btn btn-secondary">Ver Detalles</a>
                 </div>
             </div>
         @endforeach

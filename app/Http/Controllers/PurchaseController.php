@@ -2,11 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Purchase; // Asegúrate de importar tu modelo
+use App\Models\Product;
+use App\Models\Purchase;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
 {
+    // Método para mostrar la página principal de las compras
+    public function index()
+    {
+        $purchases = Purchase::paginate(15);
+
+        return view('stores.purchases.index', compact('purchases'));
+    }
+
+    public function show($id)
+    {
+        $purchase = Purchase::findOrFail($id);
+
+        return view('stores.purchases.show', compact('purchase')); 
+    }
+
+
+
+
+
+
+
+
+
     // Mostrar el formulario de crear nueva compra
     public function create()
     {
@@ -34,21 +59,9 @@ class PurchaseController extends Controller
         return redirect()->route('purchases.index')->with('success', 'Compra registrada exitosamente.');
     }
 
-    // Mostrar la lista de compras
-    public function index()
-    {
-        $purchases = Purchase::all(); // O cualquier lógica que necesites
-        return view('stores.purchases.index', compact('purchases'));
-    }
+    
 
-        public function show($id)
-    {
-        // Fetch the purchase by ID
-        $purchase = Purchase::findOrFail($id);
-
-        // Return the view with the purchase data
-        return view('stores.purchases.show', compact('purchase')); // Updated line
-    }
+    
 
     // En tu controlador
     public function search(Request $request)

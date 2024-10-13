@@ -50,7 +50,7 @@
                             <ul id="purchaseList" class="list-unstyled">
                                 @foreach ($purchases as $purchase)
                                     <li>
-                                        <a href="{{ route('purchases.show', ['id' => $purchase->id]) }}" class="btn btn-info btn-block mb-2">Ver Compra {{ $purchase->id }}</a>
+                                        <a href="{{ route('purchases.show', ['purchase' => $purchase->id]) }}" class="btn btn-info btn-block mb-2">Ver Compra {{ $purchase->id }}</a>
                                     </li>
                                 @endforeach
                             </ul>

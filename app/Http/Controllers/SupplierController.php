@@ -8,11 +8,32 @@ use Illuminate\Http\Request;
 class SupplierController extends Controller
 {
     // Método para mostrar la página principal de los proveedores
-    public function index() {
-        // Obtén todos los proveedores
-        $suppliers = Supplier::all();
+    public function index() 
+    {
+        $suppliers = Supplier::paginate(15);
+
         return view('stores.suppliers.index', compact('suppliers'));
     }
+
+    // Método para mostrar la información de un proveedor específico
+    public function show($id) 
+    {
+        // Busca el proveedor por ID, o lanza un 404 si no se encuentra
+        $supplier = Supplier::findOrFail($id);
+        
+        return view('stores.suppliers.show', compact('supplier'));
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     // Método para mostrar el formulario para crear un nuevo proveedor
     public function create() {
@@ -37,12 +58,7 @@ class SupplierController extends Controller
         return redirect()->route('suppliers.index')->with('success', 'Proveedor creado con éxito.');
     }
 
-    // Método para mostrar la información de un proveedor específico
-    public function show($id) {
-        // Busca el proveedor por ID, o lanza un 404 si no se encuentra
-        $supplier = Supplier::findOrFail($id);
-        return view('stores.suppliers.show', compact('supplier'));
-    }
+    
 
     public function destroy($id)
 {

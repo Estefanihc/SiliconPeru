@@ -9,12 +9,29 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     // Método para mostrar la página principal de los productos
-    public function index() {
-        // Llamar todos los registros
+    public function index() 
+    {
         $products = Product::paginate(5);
         
         return view('stores.products.index', compact('products')); // Pasar la lista de productos a la vista
     }
+
+    // Método para mostrar la información de un producto en específico
+    public function show(Product $product) 
+    {
+        return view('stores.products.show', compact('product')); // Pasar el producto a la vista
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     // Método para mostrar el formulario para crear un nuevo producto
     public function create()
@@ -27,10 +44,7 @@ class ProductController extends Controller
 }
 
 
-    // Método para mostrar la información de un producto en específico
-    public function show(Product $product) {
-        return view('stores.products.show', compact('product')); // Pasar el producto a la vista
-    }
+    
 
     // Método para mostrar el formulario de edición
     public function edit(Product $product) {

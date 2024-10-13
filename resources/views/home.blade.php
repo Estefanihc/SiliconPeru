@@ -86,8 +86,7 @@
 
         @auth
             <!-- Mostrar si el usuario está autenticado -->
-            <a href="{{ route('products.index') }}" class="btn btn-primary">Ver Inventario</a>
-            <a href="{{ route('compras.index') }}" class="btn btn-secondary">Ver compras</a>
+            <a href="{{ route('employees.index') }}" class="btn btn-primary">Ver Empleados</a>
 
             <!-- Botón para regresar al dashboard -->
             <a href="{{ route('dashboard') }}" class="btn btn-secondary">Regresar</a>
