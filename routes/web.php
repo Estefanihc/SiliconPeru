@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/products/{product}', 'show')->name('products.show'); // Ver detalles del producto
         Route::get('/products/{product}/edit', 'edit')->name('products.edit'); // Editar producto
         Route::put('/products/{product}', 'update')->name('products.update'); //Actualizar producto
+        Route::delete('/products/{product}', 'destroy')->name('products.destroy'); //Eliminar producto
     });
 });
 
@@ -76,11 +77,15 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
-    Route::get('/purchases/create', [PurchaseController::class, 'create'])->name('purchases.create');
-    Route::post('/purchases', [PurchaseController::class, 'store'])->name('purchases.store');
-    Route::get('/purchases/{id}', [PurchaseController::class, 'show'])->name('purchases.show');
-    // Add more routes as needed
+    Route::controller(PurchaseController::class)->group(function() {
+        Route::get('/purchases', 'index')->name('purchases.index');
+        Route::get('/purchases/create', 'create')->name('purchases.create');
+        Route::post('/purchases', 'store')->name('purchases.store');
+        Route::get('/purchases/{purchase}', 'show')->name('purchases.show');
+        Route::get('/purchases/{purchase}/edit', 'edit')->name('purchases.edit'); // Ruta para editar
+        Route::put('/purchases/{purchase}', 'update')->name('purchases.update'); // Ruta para actualizar
+        Route::delete('/purchases/{purchase}', 'destroy')->name('purchases.destroy');
+    });
 });
 
 
@@ -89,9 +94,13 @@ Route::middleware(['auth'])->group(function () {
 //Vista de relación productos -> compras
 Route::middleware(['auth'])->group(function () {
     Route::controller(ProductPurchaseController::class)->group(function() {
-        Route::get('/productsPurchases', 'index');
-        Route::get('/productsPurchases/create', 'create');
-        Route::get('/productsPurchases/{productPurchase}', 'show');
+        Route::get('/productsPurchases', 'index')->name('productsPurchases.index');
+        Route::get('/productsPurchases/create', 'create')->name('productsPurchases.create');
+        Route::post('/productsPurchases', 'store')->name('productsPurchases.store');
+        Route::get('/productsPurchases/{productPurchase}', 'show')->name('productsPurchases.show');
+        Route::get('/productsPurchases/{productPurchase}/edit', 'edit')->name('productsPurchases.edit'); // Ruta para editar
+        Route::put('/productsPurchases/{productPurchase}', 'update')->name('productsPurchases.update'); // Ruta para actualizar
+        Route::delete('/productsPurchases/{productPurchase}', 'destroy')->name('productsPurchases.destroy');
     });
 });
 

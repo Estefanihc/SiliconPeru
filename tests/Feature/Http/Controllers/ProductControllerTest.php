@@ -75,12 +75,12 @@ class ProductControllerTest extends TestCase
     /**
      * Prueba que los usuarios invitados no puedan enviar una solicitud para eliminar un producto.
      */
-    /*public function test_guest_access_to_destroy_product()
+    public function test_guest_access_to_destroy_product()
     {
         $this->delete('/products/1')
             ->assertStatus(302)
             ->assertRedirect('/login');
-    }*/
+    }
 
     // Prueba que un usuario pueda crear un producto con datos válidos
     public function testUserCanCreateProductWithValidData()
