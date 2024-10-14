@@ -24,19 +24,19 @@ class PurchaseController extends Controller
         return view('stores.purchases.show', compact('purchase')); 
     }
 
-
-
-
-
-
-
-
-
     // Mostrar el formulario de crear nueva compra
     public function create()
     {
         return view('stores.purchases.create');
     }
+
+
+
+
+
+
+
+    
 
     // Almacenar la nueva compra
     public function store(Request $request)

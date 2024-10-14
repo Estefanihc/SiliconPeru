@@ -24,21 +24,22 @@ class SupplierController extends Controller
         return view('stores.suppliers.show', compact('supplier'));
     }
 
-
-
-
-
-
-
-
-
-
-
-
     // Método para mostrar el formulario para crear un nuevo proveedor
-    public function create() {
+    public function create() 
+    {
         return view('stores.suppliers.create');
     }
+
+
+
+
+
+
+
+
+
+
+    
 
     // Método para almacenar un nuevo proveedor
     public function store(Request $request) {

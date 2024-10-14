@@ -9,48 +9,53 @@
                 <img src="https://mlkenzoihcoe.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://silicon.pe/wp-content/uploads/2023/01/Logotipo-en-Blanco2.png" alt="Logo Silicon" class="logo mx-auto d-block" />
             </div>
 
-            <h1 class="mb-4 text-background">Crear Nueva Compra</h1>
+            <h1 class="mb-4 text-background">Crear Nuevo Producto</h1>
 
             <div class="outer-card shadow-lg mx-auto mb-4">
                 <div class="inner-card p-4">
                     <div class="card-header bg-dark text-white text-center">
-                        <h2 class="mb-0">Detalles de la Compra</h2>
+                        <h2 class="mb-0">Detalles del producto</h2>
                     </div>
                     <div class="card-body">
-                        <p class="lead mb-4">Completa el siguiente formulario para registrar una nueva compra.</p>
+                        <p class="lead mb-4">Completa el siguiente formulario para registrar un nuevo producto.</p>
 
-                        <form id="purchaseForm">
+                        <form id="productForm" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-group mb-3">
-                                <label for="itemName" class="form-label">Nombre del Artículo</label>
-                                <input type="text" class="form-control" id="itemName" placeholder="Ingrese el nombre del artículo" required>
+                                <label for="productName" class="form-label">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="productName" name="name" placeholder="Ingrese el nombre del producto" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="unitPrice" class="form-label">Precio Unitario</label>
-                                <input type="text" class="form-control" id="unitPrice" placeholder="Precio unitario" readonly>
+                                <label for="description" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="description" name="description" placeholder="Ingrese la descripción del producto" rows="3"></textarea>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="quantity" class="form-label">Cantidad</label>
-                                <input type="number" class="form-control" id="quantity" placeholder="Ingrese la cantidad" required>
+                                <label for="purchasePrice" class="form-label">Precio de Compra</label>
+                                <input type="number" class="form-control" id="purchasePrice" name="purchase_price" placeholder="Ingrese el precio de compra" step="0.01" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="totalPrice" class="form-label">Precio Total</label>
-                                <input type="text" class="form-control" id="totalPrice" placeholder="Precio total" readonly>
+                                <label for="salePrice" class="form-label">Precio de Venta</label>
+                                <input type="number" class="form-control" id="salePrice" name="sale_price" placeholder="Ingrese el precio de venta" step="0.01" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="supplier" class="form-label">Proveedor</label>
-                                <select id="supplier" class="form-control" required>
-                                    <option value="">Seleccione un proveedor</option>
-                                    <option value="1">Proveedor 1</option>
-                                    <option value="2">Proveedor 2</option>
-                                    <option value="3">Proveedor 3</option>
-                                    <!-- Puedes agregar más proveedores aquí -->
-                                </select>
+                                <label for="stock" class="form-label">Stock Disponible</label>
+                                <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese la cantidad de stock" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="entryDate" class="form-label">Fecha de Ingreso</label>
+                                <input type="date" class="form-control" id="entryDate" name="entry_date" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="image" class="form-label">Imagen del Producto</label>
+                                <input type="file" class="form-control" id="image" name="image" accept="image/*">
                             </div>
                             <div class="button-container">
-                                <button type="submit" class="btn btn-primary">Registrar Compra</button>
-                                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Volver</a>
+                                <button type="submit" class="btn btn-primary">Registrar Producto</button>
+                                <a href="{{ route('products.index') }}" class="btn btn-secondary">Volver</a>
                             </div>
                         </form>
+                        
+                        
 
                         <!-- Mensaje de confirmación -->
                         <div id="confirmationMessage" class="alert alert-success mt-3" style="display: none;"></div>
@@ -61,17 +66,7 @@
                             <input type="text" id="searchInput" class="form-control mb-3" placeholder="Buscar por nombre o código">
                         </div>
 
-                        <!-- Lista de compras -->
-                        <div class="mt-4">
-                            <h4>Ver Compras:</h4>
-                            <ul id="purchaseList" class="list-unstyled">
-                                @foreach ($purchases as $purchase)
-                                    <li>
-                                        <a href="{{ route('purchases.show', ['id' => $purchase->id]) }}" class="btn btn-info btn-block mb-2">Ver Compra {{ $purchase->id }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                        
 
                     </div>
                 </div>
@@ -213,7 +208,7 @@
     </style>
 
     <script>
-        document.getElementById('purchaseForm').addEventListener('submit', function (event) {
+        document.getElementById('productForm').addEventListener('submit', function (event) {
             event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
             
             // Aquí puedes agregar la lógica para registrar la compra (usando AJAX o redireccionando a

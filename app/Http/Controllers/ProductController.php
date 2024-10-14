@@ -22,26 +22,23 @@ class ProductController extends Controller
         return view('stores.products.show', compact('product')); // Pasar el producto a la vista
     }
 
-
-
-
-
-
-
-
-
-
-
-
     // Método para mostrar el formulario para crear un nuevo producto
     public function create()
-{
-    // Si no necesitas un producto específico, puedes crear un objeto vacío.
-    // Esto es útil si solo estás creando un nuevo producto y no estás editando uno existente.
-    $product = new Product(); // Asegúrate de que Product sea el modelo correcto.
+    {
+        return view('stores.products.create');
+    }
 
-    return view('stores.products.create', compact('product'));
-}
+
+
+
+
+
+
+
+
+
+
+    
 
 
     
@@ -54,6 +51,9 @@ class ProductController extends Controller
     // Método para almacenar un nuevo producto
     public function store(Request $request)
     {
+        // Verifica si los datos están llegando correctamente
+        //dd($request->all());
+
         // Validar los datos
         $validatedData = $request->validate([
             'name' => 'required|max:100',
@@ -66,26 +66,26 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-    // Calcular el margen de ganancia
-    $purchasePrice = $validatedData['purchase_price'];
-    $salePrice = $validatedData['sale_price'];
-    $profitMargin = ($purchasePrice > 0) ? (($salePrice - $purchasePrice) / $purchasePrice) * 100 : 0;
-    $validatedData['profit_margin'] = $profitMargin;
+        // Calcular el margen de ganancia
+        $purchasePrice = $validatedData['purchase_price'];
+        $salePrice = $validatedData['sale_price'];
+        $profitMargin = ($purchasePrice > 0) ? (($salePrice - $purchasePrice) / $purchasePrice) * 100 : 0;
+        $validatedData['profit_margin'] = $profitMargin;
 
-    // Crear un nuevo producto
-    $product = new Product();
-    $this->fillProduct($product, $validatedData);
+        // Crear un nuevo producto
+        $product = new Product();
+        $this->fillProduct($product, $validatedData);
 
-    // Manejar la imagen
-    if ($request->hasFile('image')) {
-        $product->image = $request->file('image')->store('images', 'public');
+        // Manejar la imagen
+        if ($request->hasFile('image')) {
+            $product->image = $request->file('image')->store('images', 'public');
+        }
+
+        $product->save();
+
+        // Redirigir a la lista de productos o a una vista de confirmación
+        return redirect()->route('products.show', $product)->with('success', 'Producto creado exitosamente.');
     }
-
-    $product->save();
-
-    // Redirigir a la lista de productos o a una vista de confirmación
-    return redirect()->route('products.show', $product)->with('success', 'Producto creado exitosamente.');
-}
 
     // Método para actualizar un producto existente
     public function update(Request $request, Product $product)

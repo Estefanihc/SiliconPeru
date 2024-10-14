@@ -148,46 +148,10 @@
             <div class="outer-card shadow-lg mx-auto mb-4">
 
                 <a href="{{ route('purchases.create') }}" class="btn btn-primary">Agregar Compra</a>
+                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Volver</a>
                 <div class="inner-card p-4">
-                    <div class="card-header bg-dark text-white text-center">
-                        <h2 class="mb-0">Detalles de la Compra</h2>
-                    </div>
+                    
                     <div class="card-body">
-                        <p class="lead mb-4">Completa el siguiente formulario para registrar una nueva compra.</p>
-
-                        <form id="purchaseForm">
-                            <div class="form-group mb-3">
-                                <label for="itemName" class="form-label">Nombre del Artículo</label>
-                                <input type="text" class="form-control" id="itemName" placeholder="Ingrese el nombre del artículo" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="unitPrice" class="form-label">Precio Unitario</label>
-                                <input type="text" class="form-control" id="unitPrice" placeholder="Precio unitario" readonly>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="quantity" class="form-label">Cantidad</label>
-                                <input type="number" class="form-control" id="quantity" placeholder="Ingrese la cantidad" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="totalPrice" class="form-label">Precio Total</label>
-                                <input type="text" class="form-control" id="totalPrice" placeholder="Precio total" readonly>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="supplier" class="form-label">Proveedor</label>
-                                <select id="supplier" class="form-control" required>
-                                    <option value="">Seleccione un proveedor</option>
-                                    <option value="1">Proveedor 1</option>
-                                    <option value="2">Proveedor 2</option>
-                                    <option value="3">Proveedor 3</option>
-                                    <!-- Puedes agregar más proveedores aquí -->
-                                </select>
-                            </div>
-                            <div class="button-container">
-                                <button type="submit" class="btn btn-primary">Registrar Compra</button>
-                                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Volver</a>
-                            </div>
-                        </form>
-
                         <!-- Mensaje de confirmación -->
                         <div id="confirmationMessage" class="alert alert-success mt-3" style="display: none;"></div>
 

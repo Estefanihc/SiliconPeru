@@ -18,9 +18,10 @@
                     <!-- Información detallada de la compra -->
                     <div class="details-container">
                         <p><strong>ID de Compra:</strong> {{ $purchase->id }}</p>
-                        <p><strong>Nombre del Producto:</strong> {{ $purchase->item_name }}</p>
-                        <p><strong>Cantidad:</strong> {{ $purchase->quantity }}</p>
-                        <p><strong>Precio:</strong> ${{ number_format($purchase->price, 2) }}</p>
+                        <p><strong>Número de CIAF:</strong> {{ $purchase->ciaf_number ?? 'N/A' }}</p>
+                        <p><strong>Fecha y Hora de Compra:</strong> {{ $purchase->purchase_date_time }}</p>
+                        <p><strong>Empleado que Realizó la Compra:</strong> {{ $purchase->employee_id }}</p>
+                        <p><strong>Proveedor:</strong> {{ $purchase->supplier_id }}</p>
                     </div>
 
                     <!-- Botones organizados verticalmente -->

@@ -43,19 +43,6 @@
                             <h4>Buscar Compras:</h4>
                             <input type="text" id="searchInput" class="form-control mb-3" placeholder="Buscar por nombre o código">
                         </div>
-
-                        <!-- Lista de compras -->
-                        <div class="mt-4">
-                            <h4>Ver Compras:</h4>
-                            <ul id="purchaseList" class="list-unstyled">
-                                @foreach ($purchases as $purchase)
-                                    <li>
-                                        <a href="{{ route('purchases.show', ['purchase' => $purchase->id]) }}" class="btn btn-info btn-block mb-2">Ver Compra {{ $purchase->id }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-
                     </div>
                 </div>
             </div>
