@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <p class="lead mb-4">Completa el siguiente formulario para registrar un nuevo producto.</p>
 
-                        <form id="productForm" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                        <form id="productForm" action="{{ route('products.store') }}" method="POST">
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="productName" class="form-label">Nombre del Producto</label>
