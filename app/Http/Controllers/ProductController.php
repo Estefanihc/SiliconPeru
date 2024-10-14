@@ -52,7 +52,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // Verifica si los datos están llegando correctamente
-        //dd($request->all());
+        dd($request->all());
 
         // Validar los datos
         $validatedData = $request->validate([
