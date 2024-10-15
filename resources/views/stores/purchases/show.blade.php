@@ -1,11 +1,11 @@
 @extends('layouts.layout')
 
-@section('title', 'Compra ' . $purchase->id)
+@section('title', 'Editar Compra ' . $purchase->id)
 
 @section('content')
 <div class="background-image d-flex align-items-center justify-content-center">
     <div class="container text-center" style="max-width: 600px;">
-        <h1 class="mb-4 text-background">Detalles de la Compra</h1>
+        <h1 class="mb-4 text-background">Editar Compra</h1>
 
         <div class="outer-card shadow-lg mx-auto mb-4">
             <div class="inner-card p-4">
@@ -13,22 +13,46 @@
                     <h2 class="mb-0">Compra: {{ $purchase->item_name }}</h2>
                 </div>
                 <div class="card-body">
-                    <p class="lead mb-4">Aquí puedes ver la información detallada de la compra realizada.</p>
+                    <p class="lead mb-4">Aquí puedes editar la información de la compra.</p>
 
-                    <!-- Información detallada de la compra -->
-                    <div class="details-container">
-                        <p><strong>ID de Compra:</strong> {{ $purchase->id }}</p>
-                        <p><strong>Número de CIAF:</strong> {{ $purchase->ciaf_number ?? 'N/A' }}</p>
-                        <p><strong>Fecha y Hora de Compra:</strong> {{ $purchase->purchase_date_time }}</p>
-                        <p><strong>Empleado que Realizó la Compra:</strong> {{ $purchase->employee_id }}</p>
-                        <p><strong>Proveedor:</strong> {{ $purchase->supplier_id }}</p>
-                    </div>
+                    <!-- Formulario para editar la compra -->
+                    <form action="{{ route('purchases.update', $purchase->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
 
-                    <!-- Botones organizados verticalmente -->
-                    <div class="button-container mt-4">
-                        <a href="{{ route('purchases.index') }}" class="btn btn-secondary mb-2">Volver</a>
-                        <a href="{{ route('purchases.show', $purchase->id) }}" class="btn btn-warning">Editar Compra</a>
-                    </div>
+                        <div class="details-container">
+                            <div class="mb-3">
+                                <label for="item_name" class="form-label"><strong>Nombre del Artículo</strong></label>
+                                <input type="text" name="item_name" id="item_name" class="form-control" value="{{ old('item_name', $purchase->item_name) }}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ciaf_number" class="form-label"><strong>Número de CIAF</strong></label>
+                                <input type="text" name="ciaf_number" id="ciaf_number" class="form-control" value="{{ old('ciaf_number', $purchase->ciaf_number) }}" placeholder="N/A">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="purchase_date_time" class="form-label"><strong>Fecha y Hora de Compra</strong></label>
+                                <input type="datetime-local" name="purchase_date_time" id="purchase_date_time" class="form-control" value="{{ old('purchase_date_time', $purchase->purchase_date_time) }}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="employee_id" class="form-label"><strong>Empleado que Realizó la Compra</strong></label>
+                                <input type="number" name="employee_id" id="employee_id" class="form-control" value="{{ old('employee_id', $purchase->employee_id) }}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="supplier_id" class="form-label"><strong>Proveedor</strong></label>
+                                <input type="number" name="supplier_id" id="supplier_id" class="form-control" value="{{ old('supplier_id', $purchase->supplier_id) }}" required>
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="button-container mt-4">
+                            <a href="{{ route('purchases.index') }}" class="btn btn-secondary mb-2">Cancelar</a>
+                            <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+                        </div>
+                    </form>
                     
                 </div>
             </div>
@@ -100,10 +124,12 @@
     .btn-secondary:hover {
         background-color: #5a6268;
         box-shadow: 0 6px 12px rgba(108, 117, 125, 0.5);
+        margin-bottom: 50px;
     }
 
     .btn-warning {
         background-color: #ffc107;
+        margin-top: 25px;
         color: #fff;
         box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
     }
@@ -121,7 +147,8 @@
         color: #fff;
     }
 
-    .details-container p {
+    .details-container p,
+    .details-container .form-label {
         font-size: 18px;
         margin: 10px 0;
     }

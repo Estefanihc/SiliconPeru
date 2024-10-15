@@ -34,7 +34,8 @@
                             </div>
                             <div class="button-container">
                                 <button type="submit" class="btn btn-primary">Registrar Compra</button>
-                                <a href="{{ route('dashboard') }}" class="btn btn-secondary">Volver</a>
+                                <a href="{{ route('purchases.index') }}" class="btn btn-secondary mb-2">Volver</a>
+
                             </div>
                         </form>
 

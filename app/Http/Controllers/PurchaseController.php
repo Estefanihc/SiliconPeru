@@ -31,13 +31,6 @@ class PurchaseController extends Controller
     }
 
 
-
-
-
-
-
-    
-
     // Almacenar la nueva compra
     public function store(Request $request)
     {
@@ -59,9 +52,6 @@ class PurchaseController extends Controller
         return redirect()->route('purchases.index')->with('success', 'Compra registrada exitosamente.');
     }
 
-    
-
-    
 
     // En tu controlador
     public function search(Request $request)
@@ -78,6 +68,34 @@ class PurchaseController extends Controller
 
         return response()->json(['products' => $products, 'suppliers' => $suppliers]);
     }
+
+    public function update(Request $request, $id)
+{
+    // Validar los datos enviados
+    $request->validate([
+        'ciaf_number' => 'nullable|string|max:255',
+        'purchase_date_time' => 'required|date',
+        'employee_id' => 'required|integer',
+        'supplier_id' => 'required|integer',
+    ]);
+
+    // Encontrar la compra por su ID
+    $purchase = Purchase::findOrFail($id);
+
+    // Actualizar los datos de la compra
+    $purchase->ciaf_number = $request->input('ciaf_number');
+    $purchase->purchase_date_time = $request->input('purchase_date_time');
+    $purchase->employee_id = $request->input('employee_id');
+    $purchase->supplier_id = $request->input('supplier_id');
+
+    // Guardar los cambios
+    $purchase->save();
+
+    // Redirigir al usuario con un mensaje de éxito
+    return redirect()->route('purchases.index')->with('success', 'La compra con ID ' . $id . ' se ha editado correctamente.');
+}
+
+
 
 
 }
