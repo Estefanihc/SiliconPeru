@@ -31,5 +31,13 @@ class UserSeeder extends Seeder
             'email' => 'a@gmail.com',
             'password' => '123456', // Se hasheará automáticamente
         ]);
+
+        /*
+        User::create([
+            'name' => 'Giancarlo',
+            'email' => 'g@gmail.com',
+            'password' => '123456', // Se hasheará automáticamente
+        ]);
+        */
     }
 }

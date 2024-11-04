@@ -4,20 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Purchase extends Model
 {
     use HasFactory;
 
-    /**
-     * Mutador para asegurarse de que el campo 'ciaf_number' se almacene en mayúsculas.
-     */
+    protected $fillable = [
+        'ciaf_number',
+        'purchase_date_time',
+        'employee_id',
+        'supplier_id',
+        'quantity',
+        'price',
+    ];
+    
+
     protected function ciafNumber(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper($value), //Mutador
+            set: fn ($value) => strtoupper($value),
         );
+    }
+
+    // En el modelo Purchase.php
+    public function productPurchases()
+    {
+        return $this->hasMany(ProductPurchase::class);
     }
 }

@@ -23,6 +23,8 @@ class PurchaseFactory extends Factory
             'purchase_date_time' => $this->faker->dateTimeThisYear(),
             'employee_id' => Employee::inRandomOrder()->first()->id, // Selecciona un empleado existente
             'supplier_id' => Supplier::inRandomOrder()->first()->id, // Selecciona un proveedor existente
+            'quantity' => $this->faker->numberBetween(1, 100), // Agrega un valor para quantity
+            'price' => $this->faker->randomFloat(2, 10, 1000), // Genera un precio aleatorio
         ];
     }
 }

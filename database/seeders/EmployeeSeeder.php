@@ -41,5 +41,16 @@ class EmployeeSeeder extends Seeder
         $employee3->user_id = $user3->id;
         $employee3->email = $user3->email;
         $employee3->save();
+
+        /*
+        $user4 = User::where('email', 'g@gmail.com')->first();
+        $employee4 = new Employee();
+        $employee4->first_name = 'Giancarlo';
+        $employee4->last_name = 'Galindo';
+        $employee4->hire_date = now();
+        $employee4->user_id = $user4->id;
+        $employee4->email = $user4->email;
+        $employee4->save();
+        */
     }
 }

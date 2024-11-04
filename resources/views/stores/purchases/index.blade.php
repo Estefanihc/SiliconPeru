@@ -111,6 +111,7 @@
                         <div class="mt-4">
                             <h4>Buscar Compras:</h4>
                             <input type="text" id="searchInput" class="form-control mb-3" placeholder="Buscar por nombre o código">
+                            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Buscar</a>
                         </div>
 
                         <!-- Lista de compras -->
@@ -118,12 +119,34 @@
                             <h4>Ver Compras:</h4>
                             <ul id="purchaseList" class="list-unstyled">
                                 @foreach ($purchases as $purchase)
-                                    <li>
-                                        <a href="{{ route('purchases.show', $purchase->id) }}" class="btn btn-info btn-block mb-2">Ver Compra {{ $purchase->id }}</a>
+                                    <li class="purchase-item">
+                                        <a href="{{ route('purchases.show', $purchase->id) }}" class="btn btn-info btn-checklist mb-2">
+                                            Ver Compra {{ $purchase->id }}
+                                        </a>
                                     </li>
                                 @endforeach
                             </ul>
                         </div>
+                        
+                        <style>
+                            #purchaseList {
+                                display: flex;
+                                flex-wrap: wrap;
+                                list-style-type: none; /* Asegúrate de que la lista no tenga puntos */
+                                padding: 0; /* Eliminar el padding por defecto */
+                            }
+                        
+                            .purchase-item {
+                                width: 48%; /* Establecer un ancho del 48% para dos columnas */
+                                margin-right: 4%; /* Espacio entre las columnas */
+                                margin-bottom: 10px; /* Espacio entre filas */
+                            }
+                        
+                            .purchase-item:nth-child(2n) {
+                                margin-right: 0; /* Eliminar el margen derecho para cada segundo elemento */
+                            }
+                        </style>
+                        
 
                     </div>
                 </div>

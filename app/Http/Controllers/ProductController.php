@@ -11,8 +11,7 @@ class ProductController extends Controller
     // Método para mostrar la página principal de los productos
     public function index() 
     {
-        $products = Product::paginate(5);
-        
+        $products = Product::paginate(6);
         return view('stores.products.index', compact('products')); // Pasar la lista de productos a la vista
     }
 
@@ -28,21 +27,6 @@ class ProductController extends Controller
         return view('stores.products.create');
     }
 
-
-
-
-
-
-
-
-
-
-
-    
-
-
-    
-
     // Método para mostrar el formulario de edición
     public function edit(Product $product) {
         return view('stores.products.edit', compact('product'));
@@ -52,7 +36,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // Verifica si los datos están llegando correctamente
-        //dd($request->all());
+        // dd($request->all());
 
         // Validar los datos
         $validatedData = $request->validate([
@@ -62,7 +46,6 @@ class ProductController extends Controller
             'purchase_price' => 'required|numeric',
             'sale_price' => 'required|numeric|gt:purchase_price', // Asegúrate de que el precio de venta sea mayor que el precio de compra
             'stock' => 'required|integer',
-            'profit_margin' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -96,9 +79,8 @@ class ProductController extends Controller
             'description' => 'nullable',
             'entry_date' => 'nullable|date',
             'purchase_price' => 'required|numeric',
-            'sale_price' => 'required|numeric',
+            'sale_price' => 'required|numeric|gt:purchase_price', // Asegúrate de que el precio de venta sea mayor que el precio de compra
             'stock' => 'required|integer',
-            'profit_margin' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación para la imagen
         ]);
 
@@ -131,6 +113,4 @@ class ProductController extends Controller
         $product->stock = $data['stock'];
         $product->profit_margin = $data['profit_margin'];
     }
-
-   
 }

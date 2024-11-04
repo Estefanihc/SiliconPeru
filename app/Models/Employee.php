@@ -4,12 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Employee extends Model
 {
     use HasFactory;
+
+    // Atributos permitidos para la asignación masiva
+    protected $fillable = [
+        'first_name', 
+        'last_name', 
+        'hire_date', 
+        'address', 
+        'phone', 
+        'email', 
+        'user_id'
+    ];
 
     /**
      * Mutador: almacena 'first_name' en minúsculas.

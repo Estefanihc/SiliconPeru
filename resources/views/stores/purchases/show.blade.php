@@ -48,10 +48,21 @@
                         </div>
 
                         <!-- Botones -->
-                        <div class="button-container mt-4">
-                            <a href="{{ route('purchases.index') }}" class="btn btn-secondary mb-2">Cancelar</a>
-                            <button type="submit" class="btn btn-warning">Guardar Cambios</button>
-                        </div>
+<div class="button-container mt-4" style="display: flex; gap: 10px;">
+    <button type="submit" class="btn btn-warning btn-uniform">Guardar Cambios</button>
+    <a href="{{ route('purchases.index') }}" class="btn btn-warning btn-uniform">Cancelar</a>
+</div>
+
+<!-- CSS adicional -->
+<style>
+    .btn-uniform {
+        padding: 10px 20px; /* Asegura el mismo relleno */
+        font-size: 16px;    /* Asegura el mismo tamaño de fuente */
+        display: inline-block;
+        line-height: 1.5;   /* Ajusta la altura de línea */
+    }
+</style>
+
                     </form>
                     
                 </div>

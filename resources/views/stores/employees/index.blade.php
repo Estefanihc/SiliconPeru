@@ -15,7 +15,52 @@
                 <div class="inner-card">
                     <div class="card-header bg-primary text-white">
                         <h2 class="mb-0">Empleados Registrados</h2>
-                        <a href="{{ route('employees.create') }}" class="btn btn-success mt-3">Agregar Empleado</a>
+                        <div class="mt-3">
+                            <a href="{{ route('employees.create') }}" class="btn btn-success">Agregar Empleado</a>
+                            <a href="{{ url()->previous() }}" class="btn btn-warning ml-2">Volver</a> <!-- Botón de Volver -->
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Tabla de empleados -->
+                        <table class="table table-bordered mt-3">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Fecha de Contratación</th>
+                                    <th>Dirección</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($employees as $employee)
+                                    <tr>
+                                        <td>{{ $employee->id }}</td>
+                                        <td>{{ $employee->nombre }}</td>
+                                        <td>{{ $employee->apellido }}</td>
+                                        <td>{{ $employee->fecha_contratacion }}</td>
+                                        <td>{{ $employee->direccion }}</td>
+                                        <td>{{ $employee->telefono }}</td>
+                                        <td>{{ $employee->email }}</td>
+                                        <td>
+                                            <a href="{{ route('employees.show', $employee->id) }}" class="btn btn-info btn-sm">Ver</a>
+                                            <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                            <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" style="display:inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <!-- Paginación -->
+                        {{ $employees->links() }}
                     </div>
                 </div>
             </div>
@@ -42,7 +87,7 @@
         }
 
         .logo {
-            max-width: 150px; /* Cambia este valor para ajustar el tamaño */
+            max-width: 150px;
             height: auto;
         }
 
@@ -127,11 +172,11 @@
             }
 
             .logo {
-                max-width: 100px; /* Cambiar aquí para dispositivos móviles */
+                max-width: 100px;
             }
 
             .table {
-                font-size: 14px; /* Ajustar el tamaño de la tabla en pantallas pequeñas */
+                font-size: 14px;
             }
         }
     </style>

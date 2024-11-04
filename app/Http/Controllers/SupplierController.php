@@ -15,14 +15,14 @@ class SupplierController extends Controller
         return view('stores.suppliers.index', compact('suppliers'));
     }
 
-    // Método para mostrar la información de un proveedor específico
+    /*// Método para mostrar la información de un proveedor específico
     public function show($id) 
     {
         // Busca el proveedor por ID, o lanza un 404 si no se encuentra
         $supplier = Supplier::findOrFail($id);
         
         return view('stores.suppliers.show', compact('supplier'));
-    }
+    }*/
 
     // Método para mostrar el formulario para crear un nuevo proveedor
     public function create() 
@@ -30,19 +30,9 @@ class SupplierController extends Controller
         return view('stores.suppliers.create');
     }
 
-
-
-
-
-
-
-
-
-
-    
-
     // Método para almacenar un nuevo proveedor
-    public function store(Request $request) {
+    public function store(Request $request) 
+    {
         // Validación de datos
         $request->validate([
             'company_name' => 'required|string|max:255',
@@ -59,20 +49,47 @@ class SupplierController extends Controller
         return redirect()->route('suppliers.index')->with('success', 'Proveedor creado con éxito.');
     }
 
-    
+    // Método para mostrar el formulario para editar un nuevo proveedor
+    public function edit(Supplier $supplier)
+    {
+        return view('stores.suppliers.edit', compact('supplier'));
+    }
 
+    // Método para actualizar un proveedor
+    public function update(Request $request, Supplier $supplier)
+    {
+        // Validación de datos
+        $request->validate([
+            'company_name' => 'required|string|max:255',
+            'fiscal_address' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'credit_line' => 'nullable|numeric',
+        ]);
+
+        // Actualizar el proveedor con los nuevos datos
+        $supplier->update($request->only([
+            'company_name', 
+            'fiscal_address', 
+            'email', 
+            'phone', 
+            'credit_line'
+        ]));
+
+        // Redirigir a la lista de proveedores con un mensaje
+        return redirect()->route('suppliers.index')->with('success', 'Proveedor creado con éxito.');
+    }
+
+    // Método para eliminar un proveedor
     public function destroy($id)
-{
-    $supplier = Supplier::findOrFail($id);
-    $supplier->delete();
-    return redirect()->route('suppliers.index')->with('success', 'Proveedor eliminado con éxito.');
-}
-
-public function edit($id)
-{
-    $supplier = Supplier::findOrFail($id);
-    return view('stores.suppliers.edit', compact('supplier'));
-}
-
-
+    {
+        try {
+            $supplier = Supplier::findOrFail($id);
+            $supplier->delete();
+    
+            return redirect()->route('suppliers.index')->with('success', 'Proveedor eliminado con éxito.');
+        } catch (\Exception $e) {
+            return redirect()->route('suppliers.index')->with('error', 'Hubo un problema al eliminar el proveedor.');
+        }
+    }
 }

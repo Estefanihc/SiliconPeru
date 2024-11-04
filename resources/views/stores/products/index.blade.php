@@ -115,20 +115,40 @@
         <a href="{{ route('products.create') }}" class="btn btn-primary">Agregar Producto</a>
         <a href="{{ route('dashboard') }}" class="btn btn-secondary">Volver</a>
 
-        <!-- Mostrar la lista de productos -->
-        @foreach ($products as $product)
-            <div class="product-item">
-                <!-- Imagen del producto -->
-                <img src="{{ $product->image ? Storage::url($product->image) : asset('storage/images/default-image.jpg') }}" alt="{{ $product->name }}" />
+       <!-- Mostrar la lista de productos -->
+<div class="product-list mt-4">
+    @foreach ($products as $product)
+        <div class="product-item">
+            <!-- Imagen del producto -->
+            <img src="{{ $product->image ? Storage::url($product->image) : asset('storage/images/default-image.jpg') }}" alt="{{ $product->name }}" />
 
-                <!-- Información del producto -->
-                <div class="product-info">
-                    <h2>{{ $product->name }}</h2>
-                    <p>Precio: S/. {{ number_format($product->sale_price, 2) }}</p>
-                    <a href="{{route('products.show', $product->id) }}" class="btn btn-secondary">Ver Detalles</a>
-                </div>
+            <!-- Información del producto -->
+            <div class="product-info">
+                <h2>{{ $product->name }}</h2>
+                <p>Precio: S/. {{ number_format($product->sale_price, 2) }}</p>
+                <a href="{{route('products.show', $product->id) }}" class="btn btn-secondary">Ver Detalles</a>
             </div>
-        @endforeach
+        </div>
+    @endforeach
+</div>
+
+<style>
+    .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* Alinear columnas con espacio */
+    }
+
+    .product-item {
+        width: 48%; /* Establecer un ancho del 48% para dos columnas */
+        margin-bottom: 20px; /* Espacio entre filas */
+    }
+
+    .product-item img {
+        max-width: 100%; /* Hacer que la imagen se ajuste al contenedor */
+        height: auto; /* Mantener la relación de aspecto de la imagen */
+    }
+</style>
 
         <!-- Paginación -->
         <div class="pagination">

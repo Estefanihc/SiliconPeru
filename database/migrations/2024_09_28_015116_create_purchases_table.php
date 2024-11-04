@@ -6,24 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePurchasesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->string('ciaf_number', 50)->nullable();
+            $table->string('ciaf_number')->nullable();
             $table->dateTime('purchase_date_time');
-            $table->foreignId('employee_id')->constrained('employees');
-            $table->foreignId('supplier_id')->constrained('suppliers');
+            $table->foreignId('employee_id')->constrained('users'); 
+            $table->foreignId('supplier_id')->constrained('suppliers'); 
+            $table->integer('quantity')->default(0); // Asegúrate de que esta línea esté aquí
+            $table->decimal('price', 10, 2)->default(0.00); // Asegúrate de que esta línea también esté aquí
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('purchases');
