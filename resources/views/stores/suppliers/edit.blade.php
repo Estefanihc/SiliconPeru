@@ -27,29 +27,41 @@
 
                             <div class="form-group mb-3">
                                 <label for="company_name">Nombre de la Empresa</label>
-                                <input type="text" class="form-control" id="company_name" name="company_name" value="{{$supplier->company_name}}" required>
+                                <input type="text" class="form-control" id="company_name" name="company_name" value="{{ old('company_name', $supplier->company_name) }}" required>
                             </div>
+                            <!-- directiva del tipo de error -->
+                            @error('company_name')
+                                <br>
+                                    <span>*{{ $message }}</span>
+                                <br>
+                            @enderror
 
                             <div class="form-group mb-3">
                                 <label for="fiscal_address">Dirección Fiscal</label>
-                                <input type="text" class="form-control" id="fiscal_address" name="fiscal_address" value="{{$supplier->fiscal_address}}" required>
+                                <input type="text" class="form-control" id="fiscal_address" name="fiscal_address" value="{{ old('fiscal_address', $supplier->fiscal_address) }}" required>
                             </div>
-
+                            <!-- directiva del tipo de error -->
+                            @error('fiscal_address')
+                                <br>
+                                    <span>*{{ $message }}</span>
+                                <br>
+                            @enderror
+                            
                             <div class="form-group mb-3">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@dominio.com"  value="{{$supplier->email}}">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@dominio.com" value="{{ old('email', $supplier->email) }}">
                             </div>
-
+                            
                             <div class="form-group mb-3">
                                 <label for="phone">Teléfono</label>
-                                <input type="text" class="form-control" id="phone" name="phone" placeholder="+51 999 999 999" value="{{$supplier->phone}}">
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="+51 999 999 999" value="{{ old('phone', $supplier->phone) }}">
                             </div>
-
+                            
                             <div class="form-group mb-3">
                                 <label for="credit_line">Línea de Crédito</label>
-                                <input type="number" step="0.01" class="form-control" id="credit_line" name="credit_line" placeholder="0.00" value="{{$supplier->credit_line}}">
+                                <input type="number" step="0.01" class="form-control" id="credit_line" name="credit_line" placeholder="0.00" value="{{ old('credit_line', $supplier->credit_line) }}">
                             </div>
-
+                          
                             <div class="d-flex justify-content-between mb-4">
                                 <button type="submit" class="btn btn-success">Editar Proveedor</button>
                                 <a href="{{ route('suppliers.index') }}" class="btn btn-secondary">Regresar</a>
