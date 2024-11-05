@@ -20,4 +20,10 @@ class Supplier extends Model
         'phone', 
         'credit_line'
     ];
+
+    // Método para crear URLs amigables
+    /*public function getRouteKeyName()
+    {
+        return 'company_name';
+    }*/
 }

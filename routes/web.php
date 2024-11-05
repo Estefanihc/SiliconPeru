@@ -34,8 +34,32 @@ Route::get('/', [DashboardController::class, 'index'])
     ->middleware(['auth'])  // Asegúrate de que el middleware 'auth' esté presente
     ->name('dashboard');
 
+// Agrupamos todas las rutas bajo el middleware 'auth'
+Route::middleware(['auth'])->group(function () {
+
+    // Rutas de empleados usando resource
+    Route::resource('employees', EmployeeController::class);
+
+    // Rutas de productos usando resource
+    Route::resource('products', ProductController::class);
+
+    // Rutas de proveedores usando resource
+    //Route::resource('proveedores', SupplierController::class)->parameters(['proveedores' => 'supplier'])->names('suppliers');
+    Route::resource('suppliers', SupplierController::class);
+
+    // Rutas de compras usando resource
+    Route::resource('purchases', PurchaseController::class);
+
+    // Rutas de relación productos -> compras usando resource
+    Route::resource('productsPurchases', ProductPurchaseController::class);
+});
 
 
+
+
+
+
+/*
 // Vista de empleados
 Route::middleware(['auth'])->group(function () {
     Route::controller(EmployeeController::class)->group(function() {
@@ -64,7 +88,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Vista de proveedores
 Route::middleware(['auth'])->group(function () {
-    Route::controller(SupplierController::class)->group(function() {
+    Route::resource('suppliers', SupplierController::class)->group(function() {
         Route::get('/suppliers', 'index')->name('suppliers.index');
         Route::get('/suppliers/create', 'create')->name('suppliers.create');
         Route::post('/suppliers', 'store')->name('suppliers.store');
@@ -103,6 +127,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/productsPurchases/{productPurchase}', 'destroy')->name('productsPurchases.destroy');
     });
 });
+*/
+
+
+
+
 
 /*
 Route::group([], function () {
@@ -128,63 +157,6 @@ Route::get('/dashboard', function () {
 */
 
 
-
-/*
-//Vista de empleados
-Route::controller(EmployeeController::class)->group(function() {
-    Route::get('/employees', 'index')->name('employees.index'); // Listar empleados
-    Route::get('/employees/create', 'create')->name('employees.create'); // Formulario para crear un empleado
-    Route::get('/employees/{employee}', 'show')->name('employees.show'); // Mostrar un empleado específico
-});
-*/
-
-/*
-//Vista de proveedores
-Route::controller(SupplierController::class)->group(function() {
-    Route::get('/suppliers', 'index');
-    Route::get('/suppliers/create', 'create');
-    Route::get('/suppliers/{supplier}', 'show');
-});
-*/
-
-
-/*
-//Vista de empleados
-Route::controller(EmployeeController::class)->middleware('auth')->group(function() {
-    Route::get('/employees', 'index');
-    Route::get('/employees/create', 'create');
-    Route::get('/employees/{employee}', 'show');
-});
-
-//Vista de productos
-Route::controller(ProductController::class)->middleware('auth')->group(function() {
-    Route::get('/products', 'index')->name('products.index'); // Asigna el nombre a la ruta
-    Route::get('/products/create', 'create')->name('products.create'); // Asigna el nombre a la ruta
-    Route::get('/products/{product}', 'show')->name('products.show'); // Asigna el nombre a la ruta
-});
-*/
-/*
-//Vista de proveedores
-Route::controller(SupplierController::class)->middleware('auth')->group(function() {
-    Route::get('/suppliers', 'index');
-    Route::get('/suppliers/create', 'create');
-    Route::get('/suppliers/{supplier}', 'show');
-});
-
-//Vista de compras
-Route::controller(PurchaseController::class)->middleware('auth')->group(function() {
-    Route::get('/purchases', 'index');
-    Route::get('/purchases/create', 'create');
-    Route::get('/purchases/{purchase}', 'show');
-});
-
-//Vista de relación productos -> compras
-Route::controller(ProductPurchaseController::class)->middleware('auth')->group(function() {
-    Route::get('/productsPurchases', 'index');
-    Route::get('/productsPurchases/create', 'create');
-    Route::get('/productsPurchases/{productPurchase}', 'show');
-});
-*/
 
 /*
 Route::middleware([
