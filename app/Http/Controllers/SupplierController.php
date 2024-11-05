@@ -51,13 +51,7 @@ class SupplierController extends Controller
     public function update(StoreSupplier $request, Supplier $supplier)
     {
         // Actualizar el proveedor con los nuevos datos
-        $supplier->update($request->only([
-            'company_name', 
-            'fiscal_address', 
-            'email', 
-            'phone', 
-            'credit_line'
-        ]));
+        $supplier->update($request->all());
 
         // Redirigir a la lista de proveedores con un mensaje
         return redirect()->route('suppliers.index')->with('success', 'Proveedor creado con éxito.');
