@@ -119,6 +119,21 @@
             transform: translateY(-2px);
         }
 
+        .text-danger {
+            display: inline-block;
+            background-color: #f8d7da; /* Color de fondo similar al mensaje nativo */
+            color: #721c24; /* Color de texto similar al mensaje nativo */
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.875em;
+            margin-left: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f5c6cb;
+            position: relative;
+            top: -5px;
+        }
+
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;

@@ -18,44 +18,47 @@
                         <h2 class="mb-0">Formulario de Proveedor</h2>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('suppliers.store') }}" method="POST">
+                        <form action="{{ route('suppliers.store') }}" method="POST" novalidate>
                             @csrf
 
                             <div class="form-group mb-3">
                                 <label for="company_name">Nombre de la Empresa</label>
                                 <input type="text" class="form-control" id="company_name" name="company_name" value="{{ old('company_name') }}" required>
+                                @error('company_name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
-                            <!-- directiva del tipo de error -->
-                            @error('company_name')
-                                <br>
-                                    <span>*{{ $message }}</span>
-                                <br>
-                            @enderror
-                            
+                        
                             <div class="form-group mb-3">
                                 <label for="fiscal_address">Dirección Fiscal</label>
                                 <input type="text" class="form-control" id="fiscal_address" name="fiscal_address" value="{{ old('fiscal_address') }}" required>
+                                @error('fiscal_address')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
-                            <!-- directiva del tipo de error -->
-                            @error('fiscal_address')
-                                <br>
-                                    <span>*{{ $message }}</span>
-                                <br>
-                            @enderror
-                            
+                        
                             <div class="form-group mb-3">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@dominio.com" value="{{ old('email') }}">
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
-                            
+                        
                             <div class="form-group mb-3">
                                 <label for="phone">Teléfono</label>
                                 <input type="text" class="form-control" id="phone" name="phone" placeholder="+51 999 999 999" value="{{ old('phone') }}">
+                                @error('phone')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
-                            
+                        
                             <div class="form-group mb-3">
                                 <label for="credit_line">Línea de Crédito</label>
                                 <input type="number" step="0.01" class="form-control" id="credit_line" name="credit_line" placeholder="0.00" value="{{ old('credit_line') }}">
+                                @error('credit_line')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             
                             <div class="d-flex justify-content-between mb-4">

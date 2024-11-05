@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier; // Importar el modelo Supplier
+use App\Http\Requests\StoreSupplier;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -31,17 +32,8 @@ class SupplierController extends Controller
     }
 
     // Método para almacenar un nuevo proveedor
-    public function store(Request $request) 
+    public function store(StoreSupplier $request) 
     {
-        // Validación de datos
-        $request->validate([
-            'company_name' => 'required|string|max:255',
-            'fiscal_address' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'credit_line' => 'nullable|numeric',
-        ]);
-
         // Crear el proveedor
         Supplier::create($request->all());
 
@@ -56,17 +48,8 @@ class SupplierController extends Controller
     }
 
     // Método para actualizar un proveedor
-    public function update(Request $request, Supplier $supplier)
+    public function update(StoreSupplier $request, Supplier $supplier)
     {
-        // Validación de datos
-        $request->validate([
-            'company_name' => 'required|string|max:255',
-            'fiscal_address' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'credit_line' => 'nullable|numeric',
-        ]);
-
         // Actualizar el proveedor con los nuevos datos
         $supplier->update($request->only([
             'company_name', 
