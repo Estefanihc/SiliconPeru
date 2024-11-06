@@ -258,6 +258,54 @@
             padding-top: 75px; 
         }
 
+
+        /* Footer Styling */
+        .styled-footer {
+            background-color: #0b172c;
+            color: #fff;
+            padding: 20px 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-logo .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #faa526;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #faa526;
+        }
+
+        .footer-copy {
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             h1 {
@@ -277,38 +325,30 @@
                 flex-direction: column;
                 align-items: center;
             }
-        }
+
+            .footer-container {
+                padding: 10px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+            }
+                }
     </style>
 </head>
 <body>
     <!-- header --> 
-    <header class="styled-header">
-        <div class="header-container">
-            <a href="#" class="logo">Silicon</a>
-            <nav class="nav-links">
-                <a href="{{ route('home') }}" class="{{ Request::is('/') ? 'active' : '' }}">
-                    Configurar Almacén
-                </a>
-                <a href="{{ route('suppliers.index') }}" class="{{ Request::is('suppliers*') ? 'active' : '' }}">
-                    Ver Proveedores
-                </a>
-                <a href="{{ route('products.index') }}" class="{{ Request::is('products*') ? 'active' : '' }}">
-                    Ver Productos
-                </a>
-                <a href="{{ route('purchases.index') }}" class="{{ Request::is('purchases*') ? 'active' : '' }}">
-                    Compras
-                </a>
-            </nav>
-        </div>
-    </header>
+    @include('layouts.partials.header');
     
-       
     <!-- nav --> 
     <!-- content --> 
     <div class="main-content">
         @yield('content')
     </div>
+
     <!-- footer --> 
+    @include('layouts.partials.footer');
+
     <!-- script --> 
 </body>
 </html>
