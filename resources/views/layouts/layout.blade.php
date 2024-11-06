@@ -134,6 +134,131 @@
         }
 
 
+        /* Header */
+        .styled-header {
+            background: rgba(11, 23, 56, 0.9);
+            padding: 15px 0;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #faa526;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(245, 140, 20, 0.8);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-links a:hover {
+            color: #000;
+        }
+
+        .logout-button {
+            background-color: #faa526;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logout-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffb7b7;
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .logout-button:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .logout-button:hover {
+            color: #000;
+        }
+
+        .active {
+            font-weight: bold;
+            color: #ffffff; /* Cambia el color según el diseño */
+            text-decoration: underline;
+            background-color: #faa526; /* Añade un color de fondo para verificar */
+        }
+
+
+
+        /* Ajuste para que el contenido no quede cubierto por el header */
+        .main-content {
+            padding-top: 75px; 
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
@@ -142,14 +267,47 @@
             .logo {
                 max-width: 100px;
             }
+
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
     <!-- header --> 
+    <header class="styled-header">
+        <div class="header-container">
+            <a href="#" class="logo">Silicon</a>
+            <nav class="nav-links">
+                <a href="{{ route('home') }}" class="{{ Request::is('/') ? 'active' : '' }}">
+                    Configurar Almacén
+                </a>
+                <a href="{{ route('suppliers.index') }}" class="{{ Request::is('suppliers*') ? 'active' : '' }}">
+                    Ver Proveedores
+                </a>
+                <a href="{{ route('products.index') }}" class="{{ Request::is('products*') ? 'active' : '' }}">
+                    Ver Productos
+                </a>
+                <a href="{{ route('purchases.index') }}" class="{{ Request::is('purchases*') ? 'active' : '' }}">
+                    Compras
+                </a>
+            </nav>
+        </div>
+    </header>
+    
+       
     <!-- nav --> 
     <!-- content --> 
-    @yield('content')
+    <div class="main-content">
+        @yield('content')
+    </div>
     <!-- footer --> 
     <!-- script --> 
 </body>
