@@ -10,7 +10,7 @@
             <a href="{{ route('suppliers.index') }}">Proveedores</a>
             <a href="{{ route('products.index') }}">Productos</a>
             <a href="{{ route('purchases.index') }}">Compras</a>
-            <a href="#contact">Contacto</a>
+            <a href="{{ route('contactanos.index') }}">Contacto</a>
         </nav>
         <div class="footer-copy">
             <p>&copy; 2024 Silicon. Todos los derechos reservados.</p>

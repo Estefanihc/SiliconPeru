@@ -9,6 +9,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPurchaseController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ContactanosController;
+use App\Mail\ContactanosMailable;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +55,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Rutas de relación productos -> compras usando resource
     Route::resource('productsPurchases', ProductPurchaseController::class);
+
+    Route::get('contactanos', [ContactanosController::class, 'index'])->name('contactanos.index');
+    Route::post('contactanos', [ContactanosController::class, 'store'])->name('contactanos.store');
 });
 
 
