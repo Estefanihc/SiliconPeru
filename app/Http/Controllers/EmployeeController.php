@@ -21,31 +21,39 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
-        // Validar los datos del formulario
-        $request->validate([
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
-            'hire_date' => 'required|date',
-            'address' => 'nullable|string|max:100',
-            'phone' => 'nullable|string|max:15',
-            'email' => 'nullable|email|max:100|unique:employees',
-            'user_id' => 'required|exists:users,id|unique:employees',
-        ]);
+    // Validar los datos del formulario
+    $request->validate([
+        'first_name' => 'required|string|max:50',
+        'last_name' => 'required|string|max:50',
+        'hire_date' => 'required|date',
+        'address' => 'nullable|string|max:100',
+        'phone' => 'nullable|string|max:15',
+        'email' => 'nullable|email|max:100|unique:employees',
+        // El campo 'user_id' ya no es necesario, ya que se va a crear el usuario automáticamente
+    ]);
 
-        // Crear el nuevo empleado
-        Employee::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'hire_date' => $request->hire_date,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'user_id' => $request->user_id,
-        ]);
+    // Crear el nuevo usuario automáticamente
+    $user = User::create([
+        'name' => $request->first_name, // El nombre del usuario es el 'first_name' del empleado
+        'email' => $request->email, // El correo del usuario es el del empleado
+        'password' => bcrypt('default_password'), // Crear una contraseña por defecto o generar una
+    ]);
 
-        // Redirigir a la lista de empleados con un mensaje de éxito
-        return redirect()->route('employees.index')->with('success', 'Empleado creado exitosamente.');
+    // Crear el nuevo empleado
+    $employee = Employee::create([
+        'first_name' => $request->first_name,
+        'last_name' => $request->last_name,
+        'hire_date' => $request->hire_date,
+        'address' => $request->address,
+        'phone' => $request->phone,
+        'email' => $request->email,
+        'user_id' => $user->id, // Asignar el 'user_id' del empleado con el 'id' del usuario creado
+    ]);
+
+    // Redirigir a la lista de empleados con un mensaje de éxito
+    return redirect()->route('employees.index')->with('success', 'Empleado y usuario creados exitosamente.');
     }
+
 
     public function show(Employee $employee)
     {

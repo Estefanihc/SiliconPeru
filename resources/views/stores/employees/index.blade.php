@@ -36,12 +36,12 @@
                             @foreach($employees as $employee)
                                 <tr>
                                     <td>{{ $employee->id }}</td>
-                                    <td>{{ $employee->nombre }}</td>
-                                    <td>{{ $employee->apellido }}</td>
-                                    <td>{{ $employee->fecha_contratacion }}</td>
-                                    <td>{{ $employee->direccion }}</td>
-                                    <td>{{ $employee->telefono }}</td>
-                                    <td>{{ $employee->email }}</td>
+                                    <td>{{ $employee->first_name ?? 'NULL' }}</td>
+                                    <td>{{ $employee->last_name ?? 'NULL' }}</td>
+                                    <td>{{ $employee->hire_date ?? 'NULL' }}</td>
+                                    <td>{{ $employee->address ?? 'NULL' }}</td>
+                                    <td>{{ $employee->phone ?? 'NULL' }}</td>
+                                    <td>{{ $employee->email ?? 'NULL' }}</td>
                                     <td>
                                         <a href="{{ route('employees.show', $employee->id) }}" class="btn btn-info btn-sm">Ver</a>
                                         <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-warning btn-sm">Editar</a>
@@ -76,13 +76,15 @@
         font-family: 'Roboto', sans-serif;
     }
 
+    
+
     .background-image {
         background-image: url('https://images.pexels.com/photos/7843999/pexels-photo-7843999.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
         background-size: cover;
         background-position: center;
         min-height: 100vh;
         padding: 60px 20px;
-        color: #fff;
+        color: #000000;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -174,7 +176,7 @@
     .btn-custom-warning {
         background-color: #ffaf38;
         color: #fff;
-    }
+    }   
 
     .btn-custom-warning:hover {
         background-color: #d39e00;

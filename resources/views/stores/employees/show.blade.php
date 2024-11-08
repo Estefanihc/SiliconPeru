@@ -1,24 +1,53 @@
-<!-- Heredar el código de la plantilla -->
 @extends('layouts.layout')
 
-<!-- Modificar la sección del título -->
-@section('title', 'Detalles del Empleado - ' . $employee->name)
+@section('title', 'Detalles del Empleado - ' . $employee->first_name . ' ' . $employee->last_name)
 
-<!-- Personalizar el contenido de la página (content) -->
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="display-4">Detalles del Empleado</h1>
-                <p class="lead">Está viendo la información del empleado: <strong>{{ $employee->name }}</strong></p>
+                <p class="lead">Está viendo la información del empleado: <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong></p>
                 <hr>
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Información Básica</h5>
-                        <p><strong>Nombre:</strong> {{ $employee->name }}</p>
-                        <p><strong>Email:</strong> {{ $employee->email }}</p>
-                        <p><strong>Fecha de Contratación:</strong> {{ \Carbon\Carbon::parse($employee->hire_date)->format('d/m/Y') }}</p>
-                        <p><strong>Teléfono:</strong> {{ $employee->phone }}</p>
+                        <p><strong>Nombre:</strong> {{ $employee->first_name }} {{ $employee->last_name }}</p>
+                        <p><strong>Email:</strong> 
+                            @if($employee->email)
+                                {{ $employee->email }}
+                            @else
+                                <em>NULL</em>
+                            @endif
+                        </p>
+                        <p><strong>Fecha de Contratación:</strong> 
+                            @if($employee->hire_date)
+                                {{ \Carbon\Carbon::parse($employee->hire_date)->format('d/m/Y') }}
+                            @else
+                                <em>NULL</em>
+                            @endif
+                        </p>
+                        <p><strong>Teléfono:</strong> 
+                            @if($employee->phone)
+                                {{ $employee->phone }}
+                            @else
+                                <em>NULL</em>
+                            @endif
+                        </p>
+                        <p><strong>Dirección:</strong> 
+                            @if($employee->address)
+                                {{ $employee->address }}
+                            @else
+                                <em>NULL</em>
+                            @endif
+                        </p>
+                        <p><strong>ID de Usuario:</strong> 
+                            @if($employee->user_id)
+                                {{ $employee->user_id }}
+                            @else
+                                <em>NULL</em>
+                            @endif
+                        </p>
                     </div>
                 </div>
             </div>
