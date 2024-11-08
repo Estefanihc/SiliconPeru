@@ -48,6 +48,13 @@
                                 <em>NULL</em>
                             @endif
                         </p>
+                        <p><strong>Rol:</strong> 
+                            @if($employee->role)
+                                {{ ucfirst($employee->role) }} <!-- Muestra el rol capitalizado -->
+                            @else
+                                <em>NULL</em>
+                            @endif
+                        </p>
                     </div>
                 </div>
             </div>

@@ -12,13 +12,14 @@ class Employee extends Model
 
     // Atributos permitidos para la asignación masiva
     protected $fillable = [
-        'first_name', 
-        'last_name', 
-        'hire_date', 
-        'address', 
-        'phone', 
-        'email', 
-        'user_id'
+        'first_name',
+        'last_name',
+        'hire_date',
+        'address',
+        'phone',
+        'email',
+        'role', 
+        'user_id',
     ];
 
     /**

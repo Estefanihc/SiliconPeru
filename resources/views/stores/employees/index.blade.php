@@ -29,6 +29,7 @@
                                 <th>Dirección</th>
                                 <th>Teléfono</th>
                                 <th>Email</th>
+                                <th>Rol</th> <!-- Nueva columna de Rol -->
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -42,6 +43,7 @@
                                     <td>{{ $employee->address ?? 'NULL' }}</td>
                                     <td>{{ $employee->phone ?? 'NULL' }}</td>
                                     <td>{{ $employee->email ?? 'NULL' }}</td>
+                                    <td>{{ $employee->role ?? 'NULL' }}</td> <!-- Muestra el rol del empleado -->
                                     <td>
                                         <a href="{{ route('employees.show', $employee->id) }}" class="btn btn-info btn-sm">Ver</a>
                                         <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-warning btn-sm">Editar</a>

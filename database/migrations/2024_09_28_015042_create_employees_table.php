@@ -20,6 +20,8 @@ class CreateEmployeesTable extends Migration
             $table->string('phone', 15)->nullable();
             $table->string('email', 100)->nullable();
 
+            $table->enum('role', ['admin', 'employee']); // Agrega el campo role con opciones restringidas
+
             $table->unsignedBigInteger('user_id')->unique();
             $table->foreign('user_id')
                 ->references('id')

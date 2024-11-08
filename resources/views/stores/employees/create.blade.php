@@ -30,6 +30,16 @@
                             <input type="{{ $name == 'hire_date' ? 'date' : ($name == 'email' ? 'email' : 'text') }}" name="{{ $name }}" id="{{ $name }}" class="form-control" required>
                         </div>
                     @endforeach
+
+                    <!-- Campo para seleccionar el rol -->
+                    <div class="mb-4">
+                        <label for="role" class="form-label">Rol</label>
+                        <select name="role" id="role" class="form-control" required>
+                            <option value="admin">Administrador</option>
+                            <option value="user">Usuario</option>
+                        </select>
+                    </div>
+
                     <div class="text-center mt-4">
                         <button type="submit" class="btn btn-primary btn-lg px-5 me-3">Agregar Empleado</button>
                     </div>

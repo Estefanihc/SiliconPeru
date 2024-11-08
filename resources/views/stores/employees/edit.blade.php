@@ -1,5 +1,3 @@
-<!-- resources/views/stores/employees/edit.blade.php -->
-
 @extends('layouts.layout')
 
 @section('title', 'Editar Empleado - ' . $employee->first_name . ' ' . $employee->last_name)
@@ -32,7 +30,6 @@
                     value="{{ old('hire_date', \Carbon\Carbon::parse($employee->hire_date)->format('Y-m-d')) }}" required>
             </div>
 
-
             <!-- Campo para la dirección -->
             <div class="mb-3">
                 <label for="address" class="form-label">Dirección</label>
@@ -60,6 +57,15 @@
                             {{ $user->name }}
                         </option>
                     @endforeach
+                </select>
+            </div>
+
+            <!-- Campo para el rol -->
+            <div class="mb-3">
+                <label for="role" class="form-label">Rol</label>
+                <select class="form-control" id="role" name="role" required>
+                    <option value="admin" {{ old('role', $employee->role) == 'admin' ? 'selected' : '' }}>Administrador</option>
+                    <option value="employee" {{ old('role', $employee->role) == 'employee' ? 'selected' : '' }}>Empleado</option>
                 </select>
             </div>
 
