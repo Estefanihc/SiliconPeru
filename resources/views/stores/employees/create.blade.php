@@ -36,7 +36,7 @@
                         <label for="role" class="form-label">Rol</label>
                         <select name="role" id="role" class="form-control" required>
                             <option value="admin">Administrador</option>
-                            <option value="user">Usuario</option>
+                            <option value="employee">Empleado</option>
                         </select>
                     </div>
 
