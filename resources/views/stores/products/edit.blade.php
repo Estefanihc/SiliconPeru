@@ -3,171 +3,134 @@
 @section('title', 'Editar Producto')
 
 @section('content')
+    <div class="background-image d-flex align-items-center justify-content-center">
+        <div class="container text-center" style="max-width: 600px;">
+            <div class="logo-container mb-4">
+                <img src="https://mlkenzoihcoe.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://silicon.pe/wp-content/uploads/2023/01/Logotipo-en-Blanco2.png" alt="Logo Silicon" class="logo mx-auto d-block" />
+            </div>
+
+            <h1 class="mb-4 text-background">Editar Producto</h1>
+
+            <div class="outer-card shadow-lg mx-auto mb-4">
+                <div class="inner-card p-4">
+                    <div class="card-header bg-dark text-white text-center">
+                        <h2 class="mb-0">Actualizar Detalles del Producto</h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">Modifica los datos del producto en el formulario.</p>
+
+                        <!-- Mostrar errores de validación -->
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <!-- Formulario de edición -->
+                        <form id="productForm" action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            
+                            <div class="form-group mb-3">
+                                <label for="productName" class="form-label">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="productName" name="name" placeholder="Ingrese el nombre del producto" value="{{ old('name', $product->name) }}" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="description" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="description" name="description" placeholder="Ingrese la descripción del producto" rows="3">{{ old('description', $product->description) }}</textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="purchasePrice" class="form-label">Precio de Compra</label>
+                                <input type="number" class="form-control" id="purchasePrice" name="purchase_price" placeholder="Ingrese el precio de compra" value="{{ old('purchase_price', $product->purchase_price) }}" step="0.01" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="salePrice" class="form-label">Precio de Venta</label>
+                                <input type="number" class="form-control" id="salePrice" name="sale_price" placeholder="Ingrese el precio de venta" value="{{ old('sale_price', $product->sale_price) }}" step="0.01" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="stock" class="form-label">Stock Disponible</label>
+                                <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese la cantidad de stock" value="{{ old('stock', $product->stock) }}" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="entryDate" class="form-label">Fecha de Ingreso</label>
+                                <input type="date" class="form-control" id="entryDate" name="entry_date" value="{{ old('entry_date', $product->entry_date) }}" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="image" class="form-label">Imagen del Producto</label>
+                                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                
+                                <!-- Mostrar imagen actual si existe -->
+                                @if ($product->image)
+                                    <p class="mt-2">Imagen Actual:</p>
+                                    <img src="{{ Storage::url($product->image) }}" alt="Product Image" class="preview-img mb-2" width="100">
+                                @endif
+
+                                <!-- Vista previa de la nueva imagen -->
+                                <p class="mt-2">Nueva Vista Previa:</p>
+                                <img id="newImagePreview" class="preview-img" style="display: none;">
+                            </div>
+                            <div class="button-container">
+                                <button type="submit" class="btn btn-custom">Actualizar Producto</button>
+                                <a href="{{ route('products.index') }}" class="btn btn-secondary">Volver</a>
+                            </div>
+                        </form>
+
+                        <!-- Mensaje de éxito -->
+                        @if (session('success'))
+                            <div class="alert alert-success mt-3">{{ session('success') }}</div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-
-        body {
-            background: url('https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg') no-repeat center center fixed;
-            background-size: cover;
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
-            margin: 20px;
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 36px;
-            color: #4CAF50;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        label {
-            font-weight: 500;
-            color: #333;
-            font-size: 14px;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s ease-in-out;
-        }
-
-        input:focus, textarea:focus {
-            border-color: #4CAF50;
-            box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
-        }
-
-        .icon {
-            position: absolute;
-            margin-left: -30px;
-            margin-top: 13px;
-            font-size: 16px;
-            color: #555;
-        }
-
-        .form-group {
-            position: relative;
-            text-align: left;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
+        /* Estilo personalizado para el botón de Actualizar Producto */
+        .btn-custom {
+            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            color: white;
             border: none;
-            outline: none;
+            border-radius: 30px;
+            padding: 10px 30px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(to right, #388E3C, #7CB342);
             cursor: pointer;
         }
 
-        .btn-primary {
-            background-color: #4CAF50;
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 128, 0, 0.2);
+        .btn-custom:active {
+            background: #2C6B2F;
+            transform: scale(0.98);
         }
 
-        .btn-primary:hover {
-            background-color: #45a049;
-            box-shadow: 0 6px 20px rgba(0, 128, 0, 0.4);
+        .button-container {
+            text-align: center;
         }
 
-        .btn-secondary {
-            background-color: #4b516d;
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-secondary:hover {
-            background-color: #3e4453;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .form-group.text-center {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-                max-width: 90%;
-            }
-
-            .btn {
-                padding: 10px 20px;
-            }
+        .preview-img {
+            max-width: 100px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
     </style>
 
-    <div class="container mt-5">
-        <h2 class="text-center">Editar Producto</h2>
-        
-        <!-- Formulario para editar el producto -->
-        <form action="{{ route('products.update', $product) }}" method="POST" class="mt-4" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            
-            <!-- Campo nombre del producto -->
-            <div class="form-group">
-                <label for="name"><i class="fas fa-box icon"></i> Nombre del producto</label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="Nombre del producto" required value="{{ $product->name }}">
-            </div>
-
-            <!-- Campo descripción -->
-            <div class="form-group mt-3">
-                <label for="description"><i class="fas fa-align-left icon"></i> Descripción</label>
-                <textarea name="description" id="description" class="form-control" placeholder="Descripción del producto">{{ $product->description }}</textarea>
-            </div>
-
-            <!-- Mostrar la imagen actual si existe -->
-            @if($product->image)
-                <div class="form-group mt-3">
-                    <label for="current_image">Imagen actual:</label><br>
-                    <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" style="width: 150px;">
-                </div>
-            @endif
-
-            <!-- Campo para subir nueva imagen -->
-            <div class="form-group mt-3">
-                <label for="image"><i class="fas fa-upload icon"></i> Cambiar Imagen:</label>
-                <input type="file" name="image" id="image" class="form-control" accept="image/*">
-            </div>
-
-            <!-- Otros campos como precio, stock, etc. -->
-            <div class="form-group mt-3">
-                <label for="stock"><i class="fas fa-archive icon"></i> Stock</label>
-                <input type="number" name="stock" id="stock" class="form-control" placeholder="Cantidad en stock" required value="{{ $product->stock }}">
-            </div>
-
-            <!-- Botones para guardar y regresar -->
-            <div class="form-group text-center mt-4">
-                <button type="submit" class="btn btn-primary">Editar Producto</button>
-                <a href="{{ route('products.show', $product->id) }}" class="btn btn-secondary">Volver a Detalles</a>
-            </div>
-        </form>
-    </div>
+    <script>
+        // Vista previa de la imagen antes de subirla
+        document.getElementById('image').addEventListener('change', function(event) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('newImagePreview').src = e.target.result;
+                document.getElementById('newImagePreview').style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+    </script>
 @endsection

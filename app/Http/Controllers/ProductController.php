@@ -82,26 +82,28 @@ class ProductController extends Controller
             'sale_price' => 'required|numeric|gt:purchase_price', // Asegúrate de que el precio de venta sea mayor que el precio de compra
             'stock' => 'required|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación para la imagen
+            'profit_margin' => 'nullable|numeric', // Se agrega la validación para profit_margin
         ]);
-
+    
         // Actualizar el producto existente
         $this->fillProduct($product, $validatedData);
-
+    
         // Manejar la imagen
         if ($request->hasFile('image')) {
             // Eliminar la imagen anterior si existe
             if ($product->image) {
                 Storage::delete($product->image);
             }
+    
             $product->image = $request->file('image')->store('images', 'public');
         }
-
+    
         $product->save(); // Guardar los cambios
-
+    
         // Redirigir a la lista de productos o a una vista de confirmación
         return redirect()->route('products.show', $product)->with('success', 'Producto actualizado exitosamente.');
     }
-
+    
     // Método para llenar las propiedades del producto
     protected function fillProduct(Product $product, array $data)
     {
@@ -111,6 +113,23 @@ class ProductController extends Controller
         $product->purchase_price = $data['purchase_price'];
         $product->sale_price = $data['sale_price'];
         $product->stock = $data['stock'];
-        $product->profit_margin = $data['profit_margin'];
+    
+        // Solo asignar profit_margin si está presente en los datos validados
+        if (isset($data['profit_margin'])) {
+            $product->profit_margin = $data['profit_margin'];
+        }
     }
+
+    public function destroy($id)
+{
+    $product = Product::find($id);
+    if ($product) {
+        $product->delete();
+        return redirect()->route('products.index')->with('success', 'Producto eliminado correctamente');
+    } else {
+        return redirect()->route('products.index')->with('error', 'Producto no encontrado');
+    }
+}
+
+    
 }

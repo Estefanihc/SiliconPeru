@@ -83,6 +83,16 @@
             box-shadow: 0 6px 20px rgba(75, 81, 109, 0.4);
         }
 
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
         .product-image img {
             width: 200px;
             height: 200px;
@@ -128,5 +138,12 @@
         <!-- Botones de acción -->
         <a href="{{ route('products.index') }}" class="btn btn-secondary">Volver</a>
         <a href="{{ route('products.edit', $product) }}" class="btn btn-primary">Editar Producto</a>
+
+        <!-- Formulario de eliminación -->
+        <form action="{{ route('products.destroy', $product) }}" method="POST" style="display: inline-block;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar este producto?')">Eliminar Producto</button>
+        </form>
     </div>
 @endsection

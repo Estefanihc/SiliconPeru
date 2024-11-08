@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'Compras')
+@section('title', 'Crear Producto')
 
 @section('content')
     <div class="background-image d-flex align-items-center justify-content-center">
@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <p class="lead mb-4">Completa el siguiente formulario para registrar un nuevo producto.</p>
 
-                        <form id="productForm" action="{{ route('products.store') }}" method="POST">
+                        <form id="productForm" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="productName" class="form-label">Nombre del Producto</label>
@@ -50,24 +50,15 @@
                                 <input type="file" class="form-control" id="image" name="image" accept="image/*">
                             </div>
                             <div class="button-container">
-                                <button type="submit" class="btn btn-primary">Registrar Producto</button>
+                                <button type="submit" class="btn btn-custom">Registrar Producto</button> <!-- Cambiado -->
                                 <a href="{{ route('products.index') }}" class="btn btn-secondary">Volver</a>
                             </div>
                         </form>
                         
-                        
-
                         <!-- Mensaje de confirmación -->
-                        <div id="confirmationMessage" class="alert alert-success mt-3" style="display: none;"></div>
-
-                        <!-- Buscar Productos -->
-                        <div class="mt-4">
-                            <h4>Buscar Compras:</h4>
-                            <input type="text" id="searchInput" class="form-control mb-3" placeholder="Buscar por nombre o código">
-                        </div>
-
-                        
-
+                        @if (session('success'))
+                            <div class="alert alert-success mt-3">{{ session('success') }}</div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -75,140 +66,43 @@
     </div>
 
     <style>
-        body {
-            font-family: 'Roboto', sans-serif; /* Aplicar la fuente a todo el cuerpo */
-        }
-
-        .background-image {
-            background-image: url('https://images.pexels.com/photos/7843999/pexels-photo-7843999.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
-            background-size: cover;
-            background-position: center;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 60px 0;
-            color: #fff;
-        }
-
-        .logo {
-            max-width: 180px;
-            height: auto;
-            margin-left: 37%;
-        }
-
-        .text-background {
-            background-color: rgba(255, 140, 20, 0.85);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            display: inline-block;
-            margin-left: 18%;
-        }
-
-        .outer-card {
-            border-radius: 20px;
-            background-color: rgba(16, 13, 59, 0.95);
-            transition: transform 0.3s ease;
-            padding: 40px;
-        }
-
-        .outer-card:hover {
-            transform: scale(1.05);
-        }
-
-        .inner-card {
-            border-radius: 15px;
+        /* Estilo personalizado para el botón de Registrar Producto */
+        .btn-custom {
+            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            color: white;
             border: none;
-        }
-
-        .card-header {
-            border-radius: 15px 15px 0 0;
-        }
-
-        .btn {
-            border-radius: 50px; /* Cambiar los bordes de los botones a estilo más moderno */
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            padding: 8px 20px;
-            margin-bottom: 10%;
+            border-radius: 30px;
+            padding: 10px 30px;
             font-size: 16px;
-            font-weight: 600;
-            width: 48%; /* Ancho consistente para los botones */
+            transition: all 0.3s ease;
         }
 
-        .btn-primary {
-            background-color: #007bff;
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); /* Añadir sombra */
+        .btn-custom:hover {
+            background: linear-gradient(to right, #388E3C, #7CB342);
+            cursor: pointer;
         }
 
-        .btn-primary:hover {
-            background-color: #fd812f;
-            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.5); /* Efecto al pasar sobre el botón */
-            margin-bottom: 10%;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            padding-top: 2%;
-            padding-bottom: 2%;
-            text-align: center;
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-            box-shadow: 0 6px 12px rgba(108, 117, 125, 0.5);
-        }
-
-        .btn-info {
-            background-color: #55b5c4;
-            padding-top: 0%;
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
-        }
-
-        .btn-info:hover {
-            background-color: #138496;
-            box-shadow: 0 6px 12px rgba(23, 162, 184, 0.5);
-        }
-
-        .form-control {
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .form-control:focus {
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-            border-color: #007bff;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .lead {
-            font-size: 1.2rem;
-            font-weight: 400;
+        .btn-custom:active {
+            background: #2C6B2F;
+            transform: scale(0.98);
         }
 
         .button-container {
-            display: flex;
-            justify-content: space-between; /* Botones alineados con espacio entre ellos */
+            text-align: center;
         }
 
-        .list-unstyled li {
-            margin-bottom: 10px; /* Espaciado entre botones */
-        }
+        /* Otros estilos del formulario y la página */
+        /* ... */
     </style>
 
     <script>
-        document.getElementById('productForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
-            
-            // Aquí puedes agregar la lógica para registrar la compra (usando AJAX o redireccionando a
+        // Vista previa de la imagen antes de subirla
+        document.getElementById('image').addEventListener('change', function(event) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('imagePreview').src = e.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+    </script>
+@endsection
