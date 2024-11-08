@@ -3,181 +3,201 @@
 @section('title', 'Lista de Empleados')
 
 @section('content')
-    <div class="background-image d-flex align-items-center justify-content-center">
-        <div class="container text-center">
-            <div class="logo-container mb-4">
-                <img src="https://mlkenzoihcoe.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://silicon.pe/wp-content/uploads/2023/01/Logotipo-en-Blanco2.png" alt="Logo Silicon" class="logo" />
-            </div>
+<div class="background-image d-flex align-items-center justify-content-center">
+    <div class="container text-center">
+        <div class="logo-container mb-4">
+            <img src="https://mlkenzoihcoe.i.optimole.com/w:auto/h:auto/q:mauto/f:best/https://silicon.pe/wp-content/uploads/2023/01/Logotipo-en-Blanco2.png" alt="Logo Silicon" class="logo" />
+        </div>
 
-            <h1 class="mb-4 text-background">Lista de Empleados</h1>
+        <h1 class="mb-4 text-background">Lista de Empleados</h1>
 
-            <div class="outer-card shadow-lg mx-auto">
-                <div class="inner-card">
-                    <div class="card-header bg-primary text-white">
-                        <h2 class="mb-0">Empleados Registrados</h2>
-                        <div class="mt-3">
-                            <a href="{{ route('employees.create') }}" class="btn btn-success">Agregar Empleado</a>
-                            <a href="{{ url()->previous() }}" class="btn btn-warning ml-2">Volver</a> <!-- Botón de Volver -->
-                        </div>
-                    </div>
+        <div class="outer-card shadow-lg mx-auto">
+            <div class="inner-card">
+                <div class="card-header bg-primary text-white rounded-title mb-3">
+                    <h2 class="mb-0">Empleados Registrados</h2>
+                </div>
 
-                    <div class="card-body">
-                        <!-- Tabla de empleados -->
-                        <table class="table table-bordered mt-3">
-                            <thead>
+                <div class="card-body">
+                    <!-- Tabla de empleados -->
+                    <table class="table table-hover mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Fecha de Contratación</th>
+                                <th>Dirección</th>
+                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($employees as $employee)
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Apellido</th>
-                                    <th>Fecha de Contratación</th>
-                                    <th>Dirección</th>
-                                    <th>Teléfono</th>
-                                    <th>Email</th>
-                                    <th>Acciones</th>
+                                    <td>{{ $employee->id }}</td>
+                                    <td>{{ $employee->nombre }}</td>
+                                    <td>{{ $employee->apellido }}</td>
+                                    <td>{{ $employee->fecha_contratacion }}</td>
+                                    <td>{{ $employee->direccion }}</td>
+                                    <td>{{ $employee->telefono }}</td>
+                                    <td>{{ $employee->email }}</td>
+                                    <td>
+                                        <a href="{{ route('employees.show', $employee->id) }}" class="btn btn-info btn-sm">Ver</a>
+                                        <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                        <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                        </form>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($employees as $employee)
-                                    <tr>
-                                        <td>{{ $employee->id }}</td>
-                                        <td>{{ $employee->nombre }}</td>
-                                        <td>{{ $employee->apellido }}</td>
-                                        <td>{{ $employee->fecha_contratacion }}</td>
-                                        <td>{{ $employee->direccion }}</td>
-                                        <td>{{ $employee->telefono }}</td>
-                                        <td>{{ $employee->email }}</td>
-                                        <td>
-                                            <a href="{{ route('employees.show', $employee->id) }}" class="btn btn-info btn-sm">Ver</a>
-                                            <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                                            <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" style="display:inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <!-- Paginación -->
-                        {{ $employees->links() }}
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <!-- Paginación -->
+                    {{ $employees->links() }}
+
+                    <!-- Botones debajo de la tabla -->
+                    <div class="mt-4 text-center">
+                        <a href="{{ route('employees.create') }}" class="btn btn-custom-success">Agregar Empleado</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-custom-warning ml-2">Volver</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <style>
-        .background-image {
-            background-image: url('https://images.pexels.com/photos/7843999/pexels-photo-7843999.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
-            background-size: cover;
-            background-position: center;
-            min-height: 100vh;
-            padding: 40px 0;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
 
-        .logo {
-            max-width: 150px;
-            height: auto;
-        }
+    .background-image {
+        background-image: url('https://images.pexels.com/photos/7843999/pexels-photo-7843999.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        padding: 60px 20px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .text-background {
-            background-color: rgba(245, 140, 20, 0.9);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            display: inline-block;
-            margin-bottom: 20px;
-        }
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
 
-        .outer-card {
-            border-radius: 20px;
-            background-color: rgba(15, 14, 58, 0.9);
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            margin-top: 20px;
-        }
+    .logo {
+        max-width: 150px;
+        height: auto;
+        filter: drop-shadow(0 0 5px #fff);
+    }
 
-        .inner-card {
-            border-radius: 15px;
-            border: none;
-        }
+    .text-background {
+        background-color: rgba(245, 140, 20, 0.8);
+        color: #fff;
+        padding: 20px 40px;  /* Aumenté más el padding para que rellene mejor */
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+        display: inline-block;
+    }
 
-        .card-header {
-            border-radius: 15px 15px 0 0;
+    .outer-card {
+        border-radius: 15px;
+        background-color: rgba(15, 15, 50, 0.85); /* Fondo más oscuro */
+        padding: 40px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-header {
+        background-color: #007bff;
+        border-radius: 12px 12px 0 0;
+        padding: 10px;
+        position: relative;
+    }
+
+    .rounded-title {
+        border-radius: 15px;
+        padding: 8px 15px;
+        font-size: 1.2rem;
+        background-color: #0056b3;
+        display: inline-block;
+        margin: auto;
+    }
+
+    .table {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(32, 22, 22, 0.1);
+        border: none;
+    }
+
+    .table th, .table td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 12px 15px;
+    }
+
+    .table th {
+        background-color: #0056b3;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.2);
+        cursor: pointer;
+    }
+
+    .btn {
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-custom-success {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-custom-success:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+    .btn-custom-warning {
+        background-color: #ffaf38;
+        color: #fff;
+    }
+
+    .btn-custom-warning:hover {
+        background-color: #d39e00;
+        transform: scale(1.05);
+    }
+
+    /* Ajuste de espacio en la viñeta */
+    .mb-3 {
+        margin-bottom: 20px !important;
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2.5rem;
         }
 
         .table {
-            width: 100%;
-            border-radius: 10px;
-            overflow: hidden;
+            font-size: 14px;
         }
 
-        .table th, .table td {
-            text-align: center;
-            vertical-align: middle;
+        .logo {
+            max-width: 100px;
         }
-
-        .table th {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .btn {
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s;
-        }
-
-        .btn-success {
-            background-color: #ffaf38;
-            color: #fff;
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
-        }
-
-        .btn-warning {
-            background-color: #ffc107;
-            color: #fff;
-        }
-
-        .btn-warning:hover {
-            background-color: #d39e00;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            color: #fff;
-        }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .logo {
-                max-width: 100px;
-            }
-
-            .table {
-                font-size: 14px;
-            }
-        }
-    </style>
+    }
+</style>
 @endsection
